@@ -10,7 +10,7 @@ ENTITY control_circuit IS
 		R0_out, R1_out: out STD_LOGIC;
 		R0_xor, R1_xor: out STD_LOGIC;
 		
-		A_in, G_in, G_out, ALU, extern: out STD_LOGIC;
+		A_in, G_in, G_out, extern: out STD_LOGIC;
 		done: out STD_LOGIC
 	);
 END;
@@ -25,16 +25,19 @@ END COMPONENT;
 
 SIGNAL c_state : INTEGER;
 SIGNAL n_state : INTEGER;
-variable instruction := func(15 downto 12);
-variable rx := func(11 downto 8);
-variable ry := func(7 downto 4);
-variable rz := func(3 downto 0);
+SIGNAL instruction : STD_LOGIC_VECTOR(3 downto 0);
+SIGNAL rx : STD_LOGIC_VECTOR(3 downto 0);
+SIGNAL ry : STD_LOGIC_VECTOR(3 downto 0);
 
 BEGIN
-instance1: find_ns PORTMAP(
-			state => c_state,
-			ns => n_state,
-			);
+	instruction <= func(15 downto 12);
+	rx <= func(11 downto 8);
+	ry <= func(7 downto 4);
+
+	instance1: find_ns PORT MAP(
+		state => c_state,
+		ns => n_state
+	);
 	PROCESS(func)
 	BEGIN
 		CASE instruction IS
@@ -69,7 +72,7 @@ instance1: find_ns PORTMAP(
 					r1_in <= '1';
 				END IF;
 				extern <= '1';
-			when 11
+			when 11 =>
 				done <= '1';
 			when 12 => 
 				done <= '0';
@@ -94,7 +97,7 @@ instance1: find_ns PORTMAP(
 				R0_out, A_in <= '1';
 			when 31 =>
 				R0_out, A_in <= '0';
-				R1_out, ALU, G_in <= '1';
+				R1_out, G_in <= '1';
 			when 32 =>
 				A_out, G_in, R1_out <= '0';
 				G_out <= '1';
