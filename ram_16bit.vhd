@@ -1,5 +1,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
+USE ieee.std_logic_signed.all;
+USE ieee.numeric_std.ALL; 
 -- Synchronous RAM
 ENTITY ram_16bit IS
 	GENERIC ( S,N : INTEGER := 16);
@@ -22,7 +24,7 @@ BEGIN
 	result(0) := "000000000000000"; --LOAD R0
 	result(1) := "000000000010000"; --Data
 	-- and repeat...
-END intitialize_ram;
+END initialize_ram;
 
 SIGNAL raMem : mem := initialize_ram;
 

@@ -53,6 +53,8 @@ BEGIN
 			when "1111" =>
 			-- GRAD LEVEL
 			--...
+			when others =>
+			
 		END CASE;
 	END PROCESS;
 	
@@ -76,7 +78,7 @@ BEGIN
 				done <= '1';
 			when 12 => 
 				done <= '0';
-				G_out,extern,r0_in,r1_in,r0_out,r1_out <= '0';
+				G_out<='0';extern<='0';r0_in<='0';r1_in<='0';r0_out<='0';r1_out <= '0';
 			
 			-- MOV States
 			when 20 =>
@@ -89,17 +91,17 @@ BEGIN
 					r0_out <= '1';
 				END IF;
 			when 21 =>
-				G_out,extern,r0_in,r1_in,r0_out,r1_out <= '0';
+				G_out<='0';extern<='0';r0_in<='0';r1_in<='0';r0_out<='0';r1_out <= '0';
 			
 			-- ADD States
 			when 30 =>
 				done <= '0';
-				R0_out, A_in <= '1';
+				R0_out<='1'; A_in <= '1';
 			when 31 =>
-				R0_out, A_in <= '0';
-				R1_out, G_in <= '1';
+				R0_out<='0'; A_in <= '0';
+				R1_out<='1'; G_in <= '1';
 			when 32 =>
-				A_out, G_in, R1_out <= '0';
+				A_in<='0'; G_in<='0'; R1_out <= '0';
 				G_out <= '1';
 				IF rx = "0000" THEN
 					R0_in <= '1';
@@ -107,7 +109,7 @@ BEGIN
 					R1_in <= '1';
 				END IF;
 			when 33 =>
-				G_out,extern,r0_in,r1_in,r0_out,r1_out <= '0';
+				G_out<='0';extern<='0';r0_in<='0';r1_in<='0';r0_out<='0';r1_out <= '0';
 			
 			-- XOR States
 			when 40 =>
@@ -124,11 +126,11 @@ BEGIN
 					R0_xor <= '1';
 				END IF;
 			when 42 =>
-				R0_xor, R1_xor <= '0';
-				G_out,extern,r0_in,r1_in,r0_out,r1_out <= '0';
+				R0_xor<='0'; R1_xor <= '0';
+				G_out<='0';extern<='0';r0_in<='0';r1_in<='0';r0_out<='0';r1_out <= '0';
 				
 			when others =>
-				G_out,extern,r0_in,r1_in,r0_out,r1_out <= '0';
+				G_out<='0';extern<='0';r0_in<='0';r1_in<='0';r0_out<='0';r1_out <= '0';
 			-- GRAD STUDENT STATES
 				
 		END CASE;

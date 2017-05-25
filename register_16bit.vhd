@@ -14,6 +14,7 @@ END register_16bit;
 
 ARCHITECTURE behavioural OF register_16bit IS
 SIGNAL temp: std_logic_vector(15 downto 0);
+SIGNAL outtemp: std_logic_vector(15 downto 0);
 BEGIN
 	PROCESS(clock, reset, do_xor)
 	BEGIN
@@ -21,10 +22,11 @@ BEGIN
 			output <= "0000000000000000";
 		ELSIF rising_edge(clock) THEN
 			IF do_xor='1' then
-				output <= output XOR input;
-			ELSE IF enable = '1' THEN
-				output <= input;
+				outtemp <= outtemp XOR input;
+			ELSIF enable = '1' THEN
+				outtemp <= input;
 			END IF;
 		END IF;
 	END PROCESS;
+	output <= outtemp;
 END behavioural;

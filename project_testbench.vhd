@@ -1,8 +1,7 @@
 LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
-USE ieee.std_logic_unsigned.all;
-library STD;
-use STD.textio.all;  
+USE ieee.std_logic_1164.all;
+USE ieee.std_logic_signed.all;
+USE ieee.numeric_std.ALL; 
 
 -- entity declaration for your testbench.Dont declare any ports here
 ENTITY testbench_project IS 
@@ -12,9 +11,11 @@ ARCHITECTURE behavior OF testbench_project IS
 
 	-- ------------------ Add Componenets ------------------
 	-- Add your components here
-	COMPONENT 
-		port (	
-		); 
+	COMPONENT my_little_processor PORT (
+		clock, reset: in STD_LOGIC;
+		data_in: in STD_LOGIC_VECTOR(15 downto 0);
+		flag: out STD_LOGIC
+		);
 	END COMPONENT;
 	-- ------------------ Add Componenets ------------------
 	
@@ -47,7 +48,11 @@ ARCHITECTURE behavior OF testbench_project IS
 	-- ------------------ Add Your Internal Signals (if needed) ------------------
 	
 BEGIN
-	
+	instance0: my_little_processor PORT MAP(
+		clock => clk_in,
+		reset => reset_in,
+		data_in => code(10 downto 0)
+		);
 	-- ------------------ Instantiate modules ------------------
 	-- Instantiate your processor here
 	-- ------------------ Instantiate modules ------------------

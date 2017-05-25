@@ -4,7 +4,7 @@ USE ieee.std_logic_1164.all;
 ENTITY find_ns IS
 	PORT (
 			state : in INTEGER;
-			ns : out INTEGER;
+			ns : out INTEGER
 			);
 END find_ns;
 

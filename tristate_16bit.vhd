@@ -16,7 +16,7 @@ BEGIN
 		IF (enable = '1') THEN
 			output <= input;
 		ELSE
-			output <= 'Z';
+			output <= "ZZZZZZZZZZZZZZZZ";
 		END IF;
 	END PROCESS;
 END behavioural;
