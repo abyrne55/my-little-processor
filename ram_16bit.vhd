@@ -1,6 +1,6 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
-
+-- Synchronous RAM
 ENTITY ram_16bit IS
 	GENERIC ( S,N : INTEGER := 16);
 	PORT(
