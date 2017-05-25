@@ -54,3 +54,5 @@ set_global_assignment -name VHDL_FILE ram_16bit.vhd
 set_global_assignment -name VHDL_FILE project_testbench.vhd
 set_global_assignment -name VHDL_FILE my_little_processor.vhd
 set_global_assignment -name VHDL_FILE control_circuit.vhd
+set_global_assignment -name VHDL_FILE register_16bit.vhd
+set_global_assignment -name VHDL_FILE tristate_16bit.vhd

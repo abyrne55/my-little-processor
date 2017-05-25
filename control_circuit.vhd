@@ -10,7 +10,7 @@ ENTITY control_circuit IS
 		R0_out, R1_out, R2_out, R3_out, R4_out: out STD_LOGIC;
 		
 		A_in, G_in, G_out, ALU, extern: out STD_LOGIC;
-		done: out STD_LOGIC;
+		done: out STD_LOGIC
 	);
 END;
 

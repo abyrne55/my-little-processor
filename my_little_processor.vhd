@@ -5,7 +5,7 @@ USE ieee.std_logic_1164.all;
 ENTITY my_little_processor IS
 	PORT (
 		clock, reset: in STD_LOGIC;
-		data_in: in STD_LOGIC_VECTOR(15 downto 0);
+		data_in: in STD_LOGIC_VECTOR(15 downto 0)
 	);
 END;
 
