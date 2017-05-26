@@ -19,6 +19,7 @@ ARCHITECTURE behavioural OF control_circuit IS
 COMPONENT find_ns IS
 			PORT(
 					state: in INTEGER;
+					instr: in std_logic_vector(3 downto 0);
 					ns: out INTEGER
 					);
 END COMPONENT;
@@ -36,28 +37,9 @@ BEGIN
 
 	instance1: find_ns PORT MAP(
 		state => c_state,
+		instr => func(15 downto 12),
 		ns => n_state
-	);
-	PROCESS(func)
-	BEGIN
-		CASE instruction IS
-			-- LOAD Rx
-			when "0000" => c_state <= 10;
-			-- MOV Rx, Ry
-			when "0001" => c_state <= 20;
-			-- ADD Rx, Ry
-			when "0010" => c_state <= 30;
-			-- XOR Rx, RY
-			when "0011" => c_state <= 40;
-			-- RESET
-			when "1111" =>
-			-- GRAD LEVEL
-			--...
-			when others =>
-			
-		END CASE;
-	END PROCESS;
-	
+	);	
 	PROCESS (c_state)
 	BEGIN
 		CASE c_state IS

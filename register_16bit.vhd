@@ -26,7 +26,7 @@ BEGIN
 			ELSIF enable = '1' THEN
 				outtemp <= input;
 			END IF;
+			output <= outtemp;
 		END IF;
 	END PROCESS;
-	output <= outtemp;
 END behavioural;
