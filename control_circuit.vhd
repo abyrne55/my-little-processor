@@ -31,13 +31,13 @@ SIGNAL rx : STD_LOGIC_VECTOR(3 downto 0);
 SIGNAL ry : STD_LOGIC_VECTOR(3 downto 0);
 
 BEGIN
-	instruction <= func(15 downto 12);
-	rx <= func(11 downto 8);
-	ry <= func(7 downto 4);
+	instruction <= func(3 downto 0);
+	rx <= func(7 downto 4);
+	ry <= func(11 downto 8);
 
 	instance1: find_ns PORT MAP(
 		state => c_state,
-		instr => func(15 downto 12),
+		instr => func(3 downto 0),
 		ns => n_state
 	);	
 	PROCESS (c_state)
@@ -77,7 +77,7 @@ BEGIN
 			
 			-- ADD States
 			when 30 =>
-				done <= '0';
+				done <= '0'; 
 				R0_out<='1'; A_in <= '1';
 			when 31 =>
 				R0_out<='0'; A_in <= '0';
@@ -96,13 +96,13 @@ BEGIN
 			-- XOR States
 			when 40 =>
 				done <= '0';
-				IF ry = "0000" THEN
+				IF rx = "0001" THEN
 					R0_out <= '1';
 				ELSE
 					R1_out <= '1';
 				END IF;
 			when 41 =>
-				IF ry = "0000" THEN
+				IF rx = "0001" THEN
 					R1_xor <= '1';
 				ELSE
 					R0_xor <= '1';

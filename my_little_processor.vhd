@@ -116,7 +116,7 @@ tristate1: tristate_16bit PORT MAP (
 );
 
 tristateG: tristate_16bit PORT MAP (
-	input => ALU_output,
+	input => G_output,
 	enable => G_out,
 	output => main_bus
 );

@@ -44,10 +44,10 @@ read_addr <= std_logic_vector(to_unsigned(read_addr_int, read_addr'length));
    ram: ram_16bit PORT MAP (
 		clock => KEY(0),
 		done => done,
---		data => ,
---		write_addr => ,
+		data => "0000000000000000",
+		write_addr => "0000000000000000",
 		read_addr => read_addr,
---		write_enable => ,
+		write_enable => '0',
 		q => func
 	);
 	processor: my_little_processor PORT MAP(
