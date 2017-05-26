@@ -7,6 +7,7 @@ ENTITY ram_16bit IS
 	GENERIC ( S,N : INTEGER := 16);
 	PORT(
 		clock: in STD_LOGIC;
+		done: in STD_LOGIC;
 		data: in STD_LOGIC_VECTOR (15 downto 0);
 		write_addr: in STD_LOGIC_VECTOR (N-1 downto 0);
 		read_addr: in STD_LOGIC_VECTOR (N-1 downto 0);
@@ -31,7 +32,7 @@ SIGNAL raMem : mem := initialize_ram;
 BEGIN
 	PROCESS (clock)
 	BEGIN
-		IF (rising_edge(clock)) THEN
+		IF (rising_edge(clock) and done='1') THEN
 			IF (write_enable = '1') THEN
 				raMem(to_integer(unsigned(write_addr))) <= data;
 			END IF;

@@ -6,7 +6,7 @@ ENTITY my_little_processor IS
 	PORT (
 		clock, reset: in STD_LOGIC;
 		data_in: in STD_LOGIC_VECTOR(15 downto 0);
-		flag: out STD_LOGIC
+		flag_out, done_out: out STD_LOGIC
 	);
 END;
 
@@ -64,7 +64,7 @@ control_circuit0: control_circuit PORT MAP (
 	G_in => G_in,
 	G_out => G_out,
 	extern => extern,
-	done => done
+	done => done_out
 );
 
 register0: register_16bit PORT MAP (
@@ -131,7 +131,7 @@ ALU0: ALU PORT MAP (
 	A => A_output,
 	B => main_bus,
 	output => ALU_output,
-	flag => flag
+	flag => flag_out
 );
 
 END behavioural;
