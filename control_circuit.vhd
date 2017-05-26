@@ -3,6 +3,7 @@ USE ieee.std_logic_1164.all;
 -- Control Circuit (FSM)
 ENTITY control_circuit IS
 	PORT(
+		ProgCount: in STD_LOGIC_VECTOR(15 downto 0);
 		clock: in STD_LOGIC;
 		func: in STD_LOGIC_VECTOR (15 downto 0);
 		

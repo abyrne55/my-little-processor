@@ -1,18 +1,21 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
+USE ieee.numeric_std.ALL; 
 -- "My Little Processor(TM)" 
 -- Top Level Entity
 ENTITY my_little_processor IS
 	PORT (
 		clock, reset: in STD_LOGIC;
 		data_in: in STD_LOGIC_VECTOR(15 downto 0);
-		flag_out, done_out: out STD_LOGIC
+		flag_out: out STD_LOGIC;
+		read_addr: out STD_LOGIC_VECTOR(15 downto 0)
 	);
 END;
 
 ARCHITECTURE behavioural OF my_little_processor IS
-SIGNAL main_bus, R0_output, R1_output, A_output, G_output, ALU_output: std_logic_vector(15 downto 0);
-SIGNAL R0_in,R1_in,R0_out,R1_out,R0_xor,R1_xor,A_in,G_in,G_out,extern,done: STD_LOGIC;
+SIGNAL read_addr_temp, main_bus, R0_output, R1_output, A_output, G_output, ALU_output: std_logic_vector(15 downto 0);
+SIGNAL R0_in,R1_in,R0_out,R1_out,R0_xor,R1_xor,A_in,G_in,G_out,extern,done_temp: STD_LOGIC;
+SIGNAL read_addr_int: INTEGER;
 COMPONENT register_16bit PORT(
 		input: in STD_LOGIC_VECTOR(15 downto 0);
 		enable: in STD_LOGIC;
@@ -22,7 +25,13 @@ COMPONENT register_16bit PORT(
 		output: out STD_LOGIC_VECTOR(15 downto 0)
 	);
 END COMPONENT;
+COMPONENT PC 	PORT (
+			clock, done, reset : in std_logic;
+			read_addr: out INTEGER
+			);
+END COMPONENT;
 COMPONENT control_circuit PORT(
+		ProgCount: in STD_LOGIC_VECTOR(15 downto 0);
 		clock: in STD_LOGIC;
 		func: in STD_LOGIC_VECTOR (15 downto 0);
 		
@@ -48,8 +57,16 @@ COMPONENT ALU PORT(
 END COMPONENT;
 
 BEGIN
+read_addr_int <= to_integer(unsigned(read_addr_temp));
+PC0: PC PORT MAP (
+	clock => clock,
+	done => done_temp,
+	reset => reset,
+	read_addr => read_addr_int
+	);
 
 control_circuit0: control_circuit PORT MAP (
+	ProgCount => read_addr_temp,
 	clock => clock,
 	func => data_in,
 	
@@ -64,7 +81,7 @@ control_circuit0: control_circuit PORT MAP (
 	G_in => G_in,
 	G_out => G_out,
 	extern => extern,
-	done => done_out
+	done => done_temp
 );
 
 register0: register_16bit PORT MAP (
@@ -133,6 +150,7 @@ ALU0: ALU PORT MAP (
 	output => ALU_output,
 	flag => flag_out
 );
+read_addr <= read_addr_temp;
 
 END behavioural;
 	

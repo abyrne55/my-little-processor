@@ -11,7 +11,6 @@ END;
 
 ARCHITECTURE behavioural of instantiate is 
 SIGNAL done: std_logic;
-SIGNAL read_addr_int: INTEGER;
 SIGNAL read_addr: STD_LOGIC_VECTOR(15 downto 0);
 SIGNAL func: STD_LOGIC_VECTOR(15 downto 0);
 SIGNAL flag: std_logic;
@@ -30,17 +29,11 @@ COMPONENT my_little_processor IS
 	PORT (
 		clock, reset: in STD_LOGIC;
 		data_in: in STD_LOGIC_VECTOR(15 downto 0);
-		flag_out, done_out: out STD_LOGIC
+		flag_out, done_out: out STD_LOGIC;
+		read_addr: out STD_LOGIC_VECTOR(15 downto 0)
 	);
 END COMPONENT;
-COMPONENT PC is
-	PORT (
-			clock, done, reset : in std_logic;
-			read_addr: out INTEGER
-			);
-END COMPONENT;
 begin 
-read_addr <= std_logic_vector(to_unsigned(read_addr_int, read_addr'length));
    ram: ram_16bit PORT MAP (
 		clock => KEY(0),
 		done => done,
@@ -55,13 +48,8 @@ read_addr <= std_logic_vector(to_unsigned(read_addr_int, read_addr'length));
 		reset => KEY(1),
 		data_in => func,
 		flag_out => flag,
-		done_out => done
-	);
-	ProgCount: PC PORT MAP(
-			clock => KEY(0),
-			done => done,
-			reset => KEY(1),
-			read_addr => read_addr_int
+		done_out => done,
+		read_addr => read_addr
 	);
 PROCESS(flag)
 BEGIN
