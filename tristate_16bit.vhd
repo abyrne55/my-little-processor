@@ -1,17 +1,17 @@
 LIBRARY ieee;
-USE ieee.std_logic_1164.all;
+USE ieee.std_logic_1164.ALL;
 -- 16-bit Tri-State Buffer
 ENTITY tristate_16bit IS
-	PORT(
-		input: in STD_LOGIC_VECTOR(15 downto 0);
-		enable: in STD_LOGIC;
-		output: out STD_LOGIC_VECTOR(15 downto 0)
+	PORT (
+		input : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+		enable : IN STD_LOGIC;
+		output : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 END tristate_16bit;
 
 ARCHITECTURE behavioural OF tristate_16bit IS
 BEGIN
-	PROCESS(input, enable)
+	PROCESS (input, enable)
 	BEGIN
 		IF (enable = '1') THEN
 			output <= input;

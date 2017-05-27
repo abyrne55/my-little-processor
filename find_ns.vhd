@@ -1,55 +1,52 @@
 LIBRARY ieee;
-USE ieee.std_logic_1164.all;
+USE ieee.std_logic_1164.ALL;
 
 ENTITY find_ns IS
 	PORT (
-			state : in INTEGER;
-			instr : IN STD_LOGIC_VECTOR(3 downto 0);
-			ns : out INTEGER
-			);
+		state : IN INTEGER;
+		instr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+		ns : OUT INTEGER
+	);
 END find_ns;
 
 ARCHITECTURE behavioural OF find_ns IS
 BEGIN
-	PROCESS(state, instr)
-	begin
-		IF state = 0 and instr = "0000" then
+	PROCESS (state, instr)
+	BEGIN
+		IF state = 0 AND instr = "0000" THEN
 			ns <= 10;
-		ELSIF state = 0 and instr = "0001" then
+		ELSIF state = 0 AND instr = "0001" THEN
 			ns <= 20;
-		ELSIF state = 0 and instr = "0010" then
+		ELSIF state = 0 AND instr = "0010" THEN
 			ns <= 30;
-		ELSIF state = 0 and instr = "0011" then
+		ELSIF state = 0 AND instr = "0011" THEN
 			ns <= 40;
-		ELSIF state = 10 then
+		ELSIF state = 10 THEN
 			ns <= 11;
-		ELSIF state = 11 then
+		ELSIF state = 11 THEN
 			ns <= 12;
-		ELSIF state = 12 then
+		ELSIF state = 12 THEN
 			ns <= 0;
-		ELSIF state = 20 then
+		ELSIF state = 20 THEN
 			ns <= 21;
-		ELSIF state = 21 then
+		ELSIF state = 21 THEN
 			ns <= 0;
-		ELSIF state = 30 then
+		ELSIF state = 30 THEN
 			ns <= 31;
-		ELSIF state = 31 then
+		ELSIF state = 31 THEN
 			ns <= 32;
-		ELSIF state = 32 then
+		ELSIF state = 32 THEN
 			ns <= 33;
-		ELSIF state = 33 then
+		ELSIF state = 33 THEN
 			ns <= 0;
-		ELSIF state = 40 then
+		ELSIF state = 40 THEN
 			ns <= 41;
-		ELSIF state = 41 then
+		ELSIF state = 41 THEN
 			ns <= 42;
-		ELSIF state = 42 then
+		ELSIF state = 42 THEN
 			ns <= 0;
 		ELSE
 			ns <= 0;
 		END IF;
-	end process;
-end behavioural;
-	
-	
-	
+	END PROCESS;
+END behavioural;
