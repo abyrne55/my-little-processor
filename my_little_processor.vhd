@@ -8,6 +8,7 @@ ENTITY my_little_processor IS
 		clock, reset: in STD_LOGIC;
 		data_in: in STD_LOGIC_VECTOR(15 downto 0);
 		flag_out: out STD_LOGIC;
+		done_out: out STD_LOGIC;
 		read_addr: out STD_LOGIC_VECTOR(15 downto 0)
 	);
 END;
@@ -151,6 +152,7 @@ ALU0: ALU PORT MAP (
 	flag => flag_out
 );
 read_addr <= read_addr_temp;
+done_out <= done_temp;
 
 END behavioural;
 	

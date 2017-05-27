@@ -38,12 +38,13 @@ BEGIN
 	result(13) := "0000000000000000"; --LOAD R0
 	result(14) := "0000000000000000"; --Data
 	result(15) := "0001000100000000"; --MOV R0 to R1
+	RETURN (result);
 END initialize_ram;
 
 SIGNAL raMem : mem := initialize_ram;
 
 BEGIN
-	PROCESS (clock)
+	PROCESS (clock, done)
 	BEGIN
 		IF (rising_edge(clock) and done='1') THEN
 --			IF (write_enable = '1') THEN

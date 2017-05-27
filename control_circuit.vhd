@@ -41,7 +41,7 @@ BEGIN
 		instr => func(3 downto 0),
 		ns => n_state
 	);	
-	PROCESS (c_state)
+	PROCESS (c_state, rx)
 	BEGIN
 		CASE c_state IS
 			-- IDLE State

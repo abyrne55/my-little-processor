@@ -11,10 +11,10 @@ END PC;
 ARCHITECTURE behavioural OF PC IS
 SIGNAL addr_temp: INTEGER;
 BEGIN
-	PROCESS(clock, done)
+	PROCESS(clock, done, reset)
 	begin
 		IF reset = '1' then
-			read_addr <= 0;
+			addr_temp <= 0;
 		ELSIF rising_edge(clock) and done = '1' then
 			addr_temp <= addr_temp + 1;
 		END IF;
