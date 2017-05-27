@@ -4,18 +4,20 @@ USE ieee.std_logic_signed.all;
 USE ieee.numeric_std.ALL; 
 
 -- entity declaration for your testbench.Dont declare any ports here
-ENTITY testbench_project IS 
-END testbench_project;
+ENTITY project_testbench IS 
+END project_testbench;
 
-ARCHITECTURE behavior OF testbench_project IS
+ARCHITECTURE behavior OF project_testbench IS
 
 	-- ------------------ Add Componenets ------------------
 	-- Add your components here
 	COMPONENT my_little_processor PORT (
-		clock, reset: in STD_LOGIC;
-		data_in: in STD_LOGIC_VECTOR(15 downto 0);
-		flag: out STD_LOGIC
-		);
+		clock, reset : IN STD_LOGIC;
+		data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+		flag_out : OUT STD_LOGIC;
+		done_out : OUT STD_LOGIC;
+		read_addr : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+	);
 	END COMPONENT;
 	-- ------------------ Add Componenets ------------------
 	
@@ -45,13 +47,19 @@ ARCHITECTURE behavior OF testbench_project IS
 	-- You may not need anything, you can design your processor to only
 	-- use clk_in, reset_in and (assembly) code signals.
 	-- If you instatiate multiple modules, you may need them
+	SIGNAL flag,done : STD_LOGIC;
+	SIGNAL read_addr : STD_LOGIC_VECTOR(15 downto 0);
+	
 	-- ------------------ Add Your Internal Signals (if needed) ------------------
 	
 BEGIN
 	instance0: my_little_processor PORT MAP(
 		clock => clk_in,
 		reset => reset_in,
-		data_in => code(10 downto 0)
+		flag_out => flag,
+		done_out => done,
+		read_addr => read_addr,
+		data_in => code(15 downto 0)
 		);
 	-- ------------------ Instantiate modules ------------------
 	-- Instantiate your processor here

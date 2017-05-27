@@ -63,7 +63,7 @@ ARCHITECTURE behavioural OF my_little_processor IS
 	END COMPONENT;
 
 BEGIN
-	read_addr_int <= to_integer(unsigned(read_addr_temp));
+	--read_addr_int <= to_integer(unsigned(read_addr_temp));
 	PC0 : PC
 	PORT MAP(
 		clock => clock, 
@@ -167,6 +167,8 @@ BEGIN
 		output => ALU_output, 
 		flag => flag_out
 	);
+	
+	read_addr_temp <= std_logic_vector(to_unsigned(read_addr_int, read_addr_temp'length));
 	read_addr <= read_addr_temp;
 	done_out <= done_temp;
 
