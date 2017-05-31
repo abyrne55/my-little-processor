@@ -1,9 +1,11 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
+USE ieee.numeric_std.ALL;
 
 ENTITY PC IS
 	PORT (
-			clock, done, reset : in std_logic;
+			input: in std_logic_vector(15 downto 0);
+			en_in, clock, done, reset : in std_logic;
 			read_addr: out INTEGER
 			);
 END PC;
@@ -15,6 +17,8 @@ BEGIN
 	begin
 		IF reset = '1' then
 			addr_temp <= 0;
+		ELSIF en_in = '1' then
+			addr_temp <= to_integer(unsigned(input));
 		ELSIF rising_edge(clock) and done = '1' then
 			addr_temp <= addr_temp + 1;
 		END IF;

@@ -21,6 +21,10 @@ BEGIN
 			ns <= 30;
 		ELSIF state = 0 AND instr = "0011" THEN
 			ns <= 40;
+		ELSIF state = 0 AND instr = "0100" THEN
+			ns <= 50;
+		ELSIF state = 0 AND instr = "0101" THEN
+			ns <= 60;
 		ELSIF state = 10 THEN
 			ns <= 11;
 		ELSIF state = 11 THEN
@@ -44,6 +48,14 @@ BEGIN
 		ELSIF state = 41 THEN
 			ns <= 42;
 		ELSIF state = 42 THEN
+			ns <= 0;
+		ELSIF state = 50 THEN
+			ns <= 51;
+		ELSIF state = 51 THEN
+			ns <= 0;
+		ELSIF state = 60 THEN
+			ns <= 61;
+		ELSIF state = 61 THEN
 			ns <= 0;
 		ELSE
 			ns <= 0;

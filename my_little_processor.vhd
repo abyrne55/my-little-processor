@@ -15,7 +15,7 @@ END;
 
 ARCHITECTURE behavioural OF my_little_processor IS
 	SIGNAL read_addr_temp, main_bus, R0_output, R1_output, A_output, G_output, ALU_output : std_logic_vector(15 DOWNTO 0);
-	SIGNAL R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, A_in, G_in, G_out, extern, done_temp : STD_LOGIC;
+	SIGNAL R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, A_in, G_in, G_out, extern, done_temp, PC_in, PC_out : STD_LOGIC;
 	SIGNAL read_addr_int : INTEGER;
 	COMPONENT register_16bit
 		PORT (
@@ -28,14 +28,14 @@ ARCHITECTURE behavioural OF my_little_processor IS
 		);
 	END COMPONENT;
 	COMPONENT PC
-		PORT (
-			clock, done, reset : IN std_logic;
-			read_addr : OUT INTEGER
-		);
+	PORT (
+			input: in std_logic_vector(15 downto 0);
+			en_in, clock, done, reset : in std_logic;
+			read_addr: out INTEGER
+			);
 	END COMPONENT;
 	COMPONENT control_circuit
 		PORT (
-			ProgCount : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			clock : IN STD_LOGIC;
 			func : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
  
@@ -66,6 +66,8 @@ BEGIN
 	--read_addr_int <= to_integer(unsigned(read_addr_temp));
 	PC0 : PC
 	PORT MAP(
+		input => main_bus,
+		en_in => PC_in,
 		clock => clock, 
 		done => done_temp, 
 		reset => reset, 
@@ -74,7 +76,6 @@ BEGIN
 
 	control_circuit0 : control_circuit
 	PORT MAP(
-		ProgCount => read_addr_temp, 
 		clock => clock, 
 		func => data_in, 
  
@@ -132,6 +133,12 @@ BEGIN
 		output => G_output
 	);
 
+	tristate_PC : tristate_16bit
+	PORT MAP(
+		input => read_addr_temp, 
+		enable => PC_out, 
+		output => main_bus
+	);
 	tristate0 : tristate_16bit
 	PORT MAP(
 		input => R0_output, 

@@ -14,6 +14,8 @@ ARCHITECTURE behavioural OF instantiate IS
 	SIGNAL read_addr : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL func : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL flag : std_logic;
+	SIGNAL reg1_out: std_logic_vector(15 downto 0);
+	SIGNAL reg2_out: std_logic_vector(15 downto 0);
 	COMPONENT ram_16bit IS
 		PORT (
 			clock : IN STD_LOGIC;
@@ -30,7 +32,7 @@ ARCHITECTURE behavioural OF instantiate IS
 			clock, reset : IN STD_LOGIC;
 			data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			flag_out, done_out : OUT STD_LOGIC;
-			read_addr : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+			read_addr, reg1_out, reg2_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 		);
 	END COMPONENT;
 BEGIN
@@ -51,7 +53,9 @@ BEGIN
 		data_in => func, 
 		flag_out => flag, 
 		done_out => done, 
-		read_addr => read_addr
+		read_addr => read_addr,
+		reg1_out => reg1_out,
+		reg2_out => reg2_out
 	);
 	PROCESS (flag)
 	BEGIN

@@ -3,13 +3,15 @@ USE ieee.std_logic_1164.ALL;
 -- Control Circuit (FSM)
 ENTITY control_circuit IS
 	PORT (
-		ProgCount : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		clock : IN STD_LOGIC;
 		func : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
  
 		R0_in, R1_in : OUT STD_LOGIC;
 		R0_out, R1_out : OUT STD_LOGIC;
 		R0_xor, R1_xor : OUT STD_LOGIC;
+		
+		PC_in: OUT STD_LOGIC;
+		PC_out: OUT STD_LOGIC;
  
 		A_in, G_in, G_out, extern : OUT STD_LOGIC;
 		done : OUT STD_LOGIC
@@ -138,6 +140,34 @@ BEGIN
 				r1_in <= '0';
 				r0_out <= '0';
 				r1_out <= '0';
+				
+			-- Load PC to Rx
+			WHEN 50 =>
+				done <= '0';
+				IF rx = "0000" THEN
+					R0_in <= '1';
+				ELSIF rx = "0001" THEN
+					R1_in <= '1';
+				END IF;
+				PC_out <= '1';
+			WHEN 51 =>
+				R0_in <= '0';
+				R1_in <= '0';
+				PC_out <= '0';
+			
+			-- Load Rx to PC
+			WHEN 60 =>
+				done <= '0';
+				IF rx = "0000" THEN
+					R0_out <= '1';
+				ELSIF rx = "0001" THEN
+					R1_out <= '1';
+				END IF;
+				PC_in <= '1';
+			WHEN 61 =>
+				R0_out <= '0';
+				R1_out <= '0';
+				PC_in <= '0';
  
 			WHEN OTHERS => 
 				G_out <= '0';

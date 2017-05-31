@@ -72,7 +72,7 @@ BEGIN
 		case cnt is
 			when others	=> 	reset <= '0'; 
 		end case;
-	end process;	
+	end process;
 	stim_proc: process 
 	begin         
 		wait for 50 ns;
