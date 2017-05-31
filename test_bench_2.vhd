@@ -67,6 +67,12 @@ BEGIN
 		END IF;
 	END PROCESS;
 	-- Create a clk
+	process (cnt)
+	begin  
+		case cnt is
+			when others	=> 	reset <= '0'; 
+		end case;
+	end process;	
 	stim_proc: process 
 	begin         
 		wait for 50 ns;
