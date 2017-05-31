@@ -9,7 +9,7 @@ ENTITY my_little_processor IS
 		data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		flag_out : OUT STD_LOGIC;
 		done_out : OUT STD_LOGIC;
-		read_addr, reg1_out, reg2_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+		read_addr, reg0_out, reg1_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 END;
 
@@ -36,12 +36,15 @@ ARCHITECTURE behavioural OF my_little_processor IS
 	END COMPONENT;
 	COMPONENT control_circuit
 		PORT (
-			clock : IN STD_LOGIC;
+			clock, reset : IN STD_LOGIC;
 			func : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
  
 			R0_in, R1_in : OUT STD_LOGIC;
 			R0_out, R1_out : OUT STD_LOGIC;
 			R0_xor, R1_xor : OUT STD_LOGIC;
+			
+			PC_in: OUT STD_LOGIC;
+			PC_out: OUT STD_LOGIC;
  
 			A_in, G_in, G_out, extern : OUT STD_LOGIC;
 			done : OUT STD_LOGIC
@@ -76,6 +79,7 @@ BEGIN
 
 	control_circuit0 : control_circuit
 	PORT MAP(
+		reset => reset,
 		clock => clock, 
 		func => data_in, 
  
@@ -90,7 +94,9 @@ BEGIN
 		G_in => G_in, 
 		G_out => G_out, 
 		extern => extern, 
-		done => done_temp
+		done => done_temp,
+		PC_in => PC_in,
+		PC_out => PC_out
 	);
 
 	register0 : register_16bit
@@ -178,7 +184,7 @@ BEGIN
 	read_addr_temp <= std_logic_vector(to_unsigned(read_addr_int, read_addr_temp'length));
 	read_addr <= read_addr_temp;
 	done_out <= done_temp;
-	reg1_out <= R0_output;
-	reg2_out <= R1_output;
+	reg0_out <= R0_output;
+	reg1_out <= R1_output;
 
 END behavioural;

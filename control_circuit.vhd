@@ -3,7 +3,7 @@ USE ieee.std_logic_1164.ALL;
 -- Control Circuit (FSM)
 ENTITY control_circuit IS
 	PORT (
-		clock : IN STD_LOGIC;
+		clock, reset : IN STD_LOGIC;
 		func : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
  
 		R0_in, R1_in : OUT STD_LOGIC;
@@ -22,6 +22,7 @@ ARCHITECTURE behavioural OF control_circuit IS
 	COMPONENT find_ns IS
 		PORT (
 			state : IN INTEGER;
+			reset: in STD_LOGIC;
 			instr : IN std_logic_vector(3 DOWNTO 0);
 			ns : OUT INTEGER
 		);
@@ -40,24 +41,37 @@ BEGIN
 
 	instance1 : find_ns
 	PORT MAP(
+		reset => reset,
 		state => c_state, 
-		instr => func(3 DOWNTO 0), 
+		instr => instruction, 
 		ns => n_state
 	); 
 	PROCESS (c_state, rx)
 	BEGIN
 		CASE c_state IS
 			-- IDLE State
-			WHEN 0 => 
+			WHEN 0 =>
+				R0_in <= '0';
+				R0_out <= '0';
+				R0_xor <= '0';
+				R1_in <= '0';
+				R1_out <= '0';
+				R1_xor <= '0';
+				PC_in <= '0';
+				PC_out <= '0';
+				A_in <= '0';
+				G_in <= '0';
+				G_out <= '0';
+				extern <= '0';
 				done <= '1';
  
 				-- LOAD States
 			WHEN 10 => 
 				done <= '0';
 				IF rx = "0000" THEN
-					r0_in <= '1';
-				ELSE
-					r1_in <= '1';
+					R0_in <= '1';
+				ELSIF rx = "0001" THEN
+					R1_in <= '1';
 				END IF;
 				extern <= '1';
 			WHEN 11 => 
@@ -66,28 +80,28 @@ BEGIN
 				done <= '0';
 				G_out <= '0';
 				extern <= '0';
-				r0_in <= '0';
-				r1_in <= '0';
-				r0_out <= '0';
-				r1_out <= '0';
+				R0_in <= '0';
+				R1_in <= '0';
+				R0_out <= '0';
+				R1_out <= '0';
  
 				-- MOV States
 			WHEN 20 => 
 				done <= '0';
 				IF rx = "0000" THEN
-					r0_in <= '1';
-					r1_out <= '1';
+					R0_in <= '1';
+					R1_out <= '1';
 				ELSE
-					r1_in <= '1';
-					r0_out <= '1';
+					R1_in <= '1';
+					R0_out <= '1';
 				END IF;
 			WHEN 21 => 
 				G_out <= '0';
 				extern <= '0';
-				r0_in <= '0';
-				r1_in <= '0';
-				r0_out <= '0';
-				r1_out <= '0';
+				R0_in <= '0';
+				R1_in <= '0';
+				R0_out <= '0';
+				R1_out <= '0';
  
 				-- ADD States
 			WHEN 30 => 
@@ -112,10 +126,10 @@ BEGIN
 			WHEN 33 => 
 				G_out <= '0';
 				extern <= '0';
-				r0_in <= '0';
-				r1_in <= '0';
-				r0_out <= '0';
-				r1_out <= '0';
+				R0_in <= '0';
+				R1_in <= '0';
+				R0_out <= '0';
+				R1_out <= '0';
  
 				-- XOR States
 			WHEN 40 => 
@@ -136,10 +150,10 @@ BEGIN
 				R1_xor <= '0';
 				G_out <= '0';
 				extern <= '0';
-				r0_in <= '0';
-				r1_in <= '0';
-				r0_out <= '0';
-				r1_out <= '0';
+				R0_in <= '0';
+				R1_in <= '0';
+				R0_out <= '0';
+				R1_out <= '0';
 				
 			-- Load PC to Rx
 			WHEN 50 =>
@@ -172,10 +186,10 @@ BEGIN
 			WHEN OTHERS => 
 				G_out <= '0';
 				extern <= '0';
-				r0_in <= '0';
-				r1_in <= '0';
-				r0_out <= '0';
-				r1_out <= '0';
+				R0_in <= '0';
+				R1_in <= '0';
+				R0_out <= '0';
+				R1_out <= '0';
 				-- GRAD STUDENT STATES
  
 		END CASE;
