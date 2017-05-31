@@ -26,7 +26,8 @@ ARCHITECTURE behavior OF project_testbench IS
 	
 	-- Internal Signals
 	-- Your circuit will need clk and reset signals.
-	signal clk_in, reset_in  : STD_LOGIC;
+	signal clk_in  : STD_LOGIC:= '0';
+	signal reset_in: STD_LOGIC;
 	
 	-- For the initial part, it will also need an assembly code input
 	signal code 				: std_logic_vector(22 downto 0);

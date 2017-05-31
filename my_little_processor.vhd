@@ -9,7 +9,7 @@ ENTITY my_little_processor IS
 		data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		flag_out : OUT STD_LOGIC;
 		done_out : OUT STD_LOGIC;
-		read_addr : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+		read_addr, reg1_out, reg2_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 END;
 
@@ -171,5 +171,7 @@ BEGIN
 	read_addr_temp <= std_logic_vector(to_unsigned(read_addr_int, read_addr_temp'length));
 	read_addr <= read_addr_temp;
 	done_out <= done_temp;
+	reg1_out <= R0_output;
+	reg2_out <= R1_output;
 
 END behavioural;
