@@ -35,9 +35,9 @@ ARCHITECTURE behavioural OF control_circuit IS
 	SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
 BEGIN
-	instruction <= func(3 DOWNTO 0);
-	rx <= func(7 DOWNTO 4);
-	ry <= func(11 DOWNTO 8);
+	instruction <= func(15 DOWNTO 12);
+	rx <= func(11 DOWNTO 8);
+	ry <= func(7 DOWNTO 4);
 
 	instance1 : find_ns
 	PORT MAP(
