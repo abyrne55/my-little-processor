@@ -13,7 +13,7 @@ END PC;
 ARCHITECTURE behavioural OF PC IS
 SIGNAL addr_temp: INTEGER;
 BEGIN
-	PROCESS(clock, done, reset)
+	PROCESS(clock, done, reset, en_in, input)
 	begin
 		IF reset = '1' then
 			addr_temp <= 0;

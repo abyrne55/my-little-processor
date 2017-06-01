@@ -10,6 +10,7 @@ ENTITY my_little_processor IS
 		flag_out : OUT STD_LOGIC;
 		done_out : OUT STD_LOGIC;
 		c_state_preout: OUT INTEGER;
+		instr_preout, rx_preout, ry_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
 		read_addr, reg0_out, reg1_out, main_bus_out, ALU_preout, G_preout, A_preout: OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 END;
@@ -46,7 +47,7 @@ ARCHITECTURE behavioural OF my_little_processor IS
 			
 			PC_in: OUT STD_LOGIC;
 			PC_out: OUT STD_LOGIC;
- 
+			instr_preout, rx_preout, ry_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
 			A_in, G_in, G_out, extern : OUT STD_LOGIC;
 			done : OUT STD_LOGIC;
 			c_state_preout : OUT INTEGER
@@ -99,7 +100,10 @@ BEGIN
 		done => done_temp,
 		PC_in => PC_in,
 		PC_out => PC_out,
-		c_state_preout => c_state_preout
+		c_state_preout => c_state_preout,
+		instr_preout => instr_preout,
+		rx_preout => rx_preout,
+		ry_preout => ry_preout
 	);
 
 	register0 : register_16bit

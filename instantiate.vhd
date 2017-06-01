@@ -4,7 +4,7 @@ USE ieee.numeric_std.ALL;
 
 ENTITY instantiate IS
 	PORT (
-		KEY : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+		SW : IN STD_LOGIC_VECTOR(1 downto 0);
 		LEDR : OUT STD_LOGIC_VECTOR(17 DOWNTO 0);
 		HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7 : OUT STD_LOGIC_VECTOR(6 downto 0)
 	);
@@ -45,8 +45,8 @@ ARCHITECTURE behavioural OF instantiate IS
 BEGIN
 	ram : ram_16bit
 	PORT MAP(
-		clock => KEY(0), 
-		done => done, 
+		clock => SW(0),
+		done => done,
 		data => "0000000000000000", 
 		write_addr => "0000000000000000", 
 		read_addr => read_addr, 
@@ -55,8 +55,8 @@ BEGIN
 	);
 	processor : my_little_processor
 	PORT MAP(
-		clock => KEY(0), 
-		reset => KEY(1), 
+		clock => SW(0), 
+		reset => SW(1), 
 		data_in => func, 
 		flag_out => flag, 
 		done_out => done, 
@@ -80,12 +80,13 @@ BEGIN
 			output2 => HEX6,
 			output3 => HEX7
 		);
-	PROCESS (flag)
-	BEGIN
-		IF flag = '1' THEN
-			LEDR <= "111111111111111111";
-		ELSE
-			LEDR <= "000000000000000000";
-		END IF;
-	END PROCESS;
+--	PROCESS (flag)
+--	BEGIN
+--		IF flag = '1' THEN
+--			LEDR <= "111111111111111111";
+--		ELSE
+--			LEDR <= "000000000000000000";
+--		END IF;
+--	END PROCESS;
+LEDR(15 downto 0) <= reg0_out;
 END behavioural;

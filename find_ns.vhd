@@ -33,6 +33,10 @@ BEGIN
 		ELSIF state = 11 THEN
 			ns <= 12;
 		ELSIF state = 12 THEN
+			ns <= 13;
+		ELSIF state = 13 THEN
+			ns <= 14;
+		ELSIF state = 14 THEN
 			ns <= 0;
 		ELSIF state = 20 THEN
 			ns <= 21;
@@ -47,6 +51,10 @@ BEGIN
 		ELSIF state = 33 THEN
 			ns <= 34;
 		ELSIF state = 34 THEN
+			ns <= 35;
+		ELSIF state = 35 THEN
+			ns <= 36;
+		ELSIF state = 36 THEN
 			ns <= 0;
 		ELSIF state = 40 THEN
 			ns <= 41;
