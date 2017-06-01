@@ -40,6 +40,7 @@ BEGIN
 	); 
 	PROCESS (c_state, rx, func)
 	BEGIN
+		R0_in <= '0';
 		CASE c_state IS
 			-- IDLE State
 			WHEN 0 =>
