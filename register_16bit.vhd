@@ -19,7 +19,7 @@ BEGIN
 	PROCESS (clock, reset, do_xor)
 	BEGIN
 		IF (reset = '1') THEN
-			output <= "0000000000000000";
+			outtemp <= "0000000000000000";
 		ELSIF rising_edge(clock) THEN
 			IF do_xor = '1' THEN
 				outtemp <= outtemp XOR input;
