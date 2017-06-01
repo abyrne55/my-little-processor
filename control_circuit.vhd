@@ -79,6 +79,7 @@ BEGIN
 				extern <= '1';
 				R1_in <= '1';
 			WHEN 13 =>
+				extern <= '1';
 				done <= '1';
 	
 			--WHEN 11 =>
