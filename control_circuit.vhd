@@ -119,12 +119,13 @@ BEGIN
 				G_in <= '0';
 				R1_out <= '0';
 				G_out <= '1';
+			WHEN 33 =>
 				IF rx = "0000" THEN
 					R0_in <= '1';
 				ELSE
 					R1_in <= '1';
 				END IF;
-			WHEN 33 => 
+			WHEN 34 => 
 				G_out <= '0';
 				extern <= '0';
 				R0_in <= '0';

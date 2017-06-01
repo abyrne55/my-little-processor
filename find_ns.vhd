@@ -45,6 +45,8 @@ BEGIN
 		ELSIF state = 32 THEN
 			ns <= 33;
 		ELSIF state = 33 THEN
+			ns <= 34;
+		ELSIF state = 34 THEN
 			ns <= 0;
 		ELSIF state = 40 THEN
 			ns <= 41;
