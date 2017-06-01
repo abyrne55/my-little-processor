@@ -6,6 +6,7 @@ ENTITY find_ns IS
 		state : IN INTEGER;
 		reset: in STD_LOGIC;
 		instr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+		rx : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
 		ns : OUT INTEGER
 	);
 END find_ns;
@@ -28,16 +29,21 @@ BEGIN
 			ns <= 50;
 		ELSIF state = 0 AND instr = "0101" THEN
 			ns <= 60;
+
+		-- LOAD
 		ELSIF state = 10 THEN
-			ns <= 11;
+			IF rx = "0000" THEN
+				ns <= 11;
+			ELSE
+				ns <= 12;
+			END IF;
 		ELSIF state = 11 THEN
-			ns <= 12;
+			ns <= 13;
 		ELSIF state = 12 THEN
 			ns <= 13;
 		ELSIF state = 13 THEN
-			ns <= 14;
-		ELSIF state = 14 THEN
 			ns <= 0;
+		
 		ELSIF state = 20 THEN
 			ns <= 21;
 		ELSIF state = 21 THEN
