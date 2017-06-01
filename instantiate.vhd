@@ -5,7 +5,8 @@ USE ieee.numeric_std.ALL;
 ENTITY instantiate IS
 	PORT (
 		KEY : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-		LEDR : OUT STD_LOGIC_VECTOR(17 DOWNTO 0)
+		LEDR : OUT STD_LOGIC_VECTOR(17 DOWNTO 0);
+		HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7 : OUT STD_LOGIC_VECTOR(6 downto 0)
 	);
 END;
 
@@ -16,6 +17,12 @@ ARCHITECTURE behavioural OF instantiate IS
 	SIGNAL flag : std_logic;
 	SIGNAL reg0_out: std_logic_vector(15 downto 0);
 	SIGNAL reg1_out: std_logic_vector(15 downto 0);
+	COMPONENT binaryto4hex IS
+		PORT ( 
+			binary : IN STD_LOGIC_VECTOR(15 downto 0);
+			output0, output1, output2, output3 : OUT STD_LOGIC_VECTOR(6 downto 0)
+		);
+	END COMPONENT;
 	COMPONENT ram_16bit IS
 		PORT (
 			clock : IN STD_LOGIC;
@@ -57,6 +64,22 @@ BEGIN
 		reg0_out => reg0_out,
 		reg1_out => reg1_out
 	);
+	bintohex0 : binaryto4hex
+	PORT MAP (
+			binary => reg0_out,
+			output0 => HEX0,
+			output1 => HEX1,
+			output2 => HEX2,
+			output3 => HEX3
+		);
+	bintohex1 : binaryto4hex
+	PORT MAP (
+			binary => reg1_out,
+			output0 => HEX4,
+			output1 => HEX5,
+			output2 => HEX6,
+			output3 => HEX7
+		);
 	PROCESS (flag)
 	BEGIN
 		IF flag = '1' THEN
