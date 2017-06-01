@@ -17,6 +17,8 @@ ARCHITECTURE behavior OF test_bench_2 IS
 	SIGNAL LEDR: STD_LOGIC_VECTOR(17 downto 0);
 	SIGNAL reg0_out: STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL reg1_out: STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL main_bus_out, ALU_preout, G_preout, A_preout: STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL c_state_preout: INTEGER;
 	COMPONENT ram_16bit IS
 		PORT (
 			clock : IN STD_LOGIC;
@@ -33,7 +35,8 @@ ARCHITECTURE behavior OF test_bench_2 IS
 			clock, reset : IN STD_LOGIC;
 			data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			flag_out, done_out : OUT STD_LOGIC;
-			read_addr, reg0_out, reg1_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+			c_state_preout : OUT INTEGER;
+			read_addr, reg0_out, reg1_out,main_bus_out, ALU_preout, G_preout, A_preout : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 		);
 	END COMPONENT;
 BEGIN
@@ -56,7 +59,12 @@ BEGIN
 		done_out => done, 
 		read_addr => read_addr,
 		reg0_out => reg0_out,
-		reg1_out => reg1_out
+		reg1_out => reg1_out,
+		main_bus_out => main_bus_out,
+		ALU_preout => ALU_preout,
+		G_preout => G_preout,
+		A_preout => A_preout,
+		c_state_preout => c_state_preout
 	);
 	PROCESS (flag)
 	BEGIN

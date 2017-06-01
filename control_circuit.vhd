@@ -14,7 +14,8 @@ ENTITY control_circuit IS
 		PC_out: OUT STD_LOGIC;
  
 		A_in, G_in, G_out, extern : OUT STD_LOGIC;
-		done : OUT STD_LOGIC
+		done : OUT STD_LOGIC;
+		c_state_preout : OUT INTEGER
 	);
 END;
 
@@ -28,8 +29,8 @@ ARCHITECTURE behavioural OF control_circuit IS
 		);
 	END COMPONENT;
 
-	SIGNAL c_state : INTEGER;
-	SIGNAL n_state : INTEGER;
+	SIGNAL c_state : INTEGER := 0;
+	SIGNAL n_state : INTEGER := 0;
 	SIGNAL instruction : STD_LOGIC_VECTOR(3 DOWNTO 0);
 	SIGNAL rx : STD_LOGIC_VECTOR(3 DOWNTO 0);
 	SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -200,6 +201,8 @@ BEGIN
 			IF rising_edge(clock) THEN
 				c_state <= n_state;
 			END IF;
-		END PROCESS;
+	END PROCESS;
+	
+	c_state_preout <= c_state;
  
 END behavioural;

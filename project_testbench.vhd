@@ -16,7 +16,7 @@ ARCHITECTURE behavior OF project_testbench IS
 		data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		flag_out : OUT STD_LOGIC;
 		done_out : OUT STD_LOGIC;
-		read_addr : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+		read_addr, main_bus_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 	END COMPONENT;
 	-- ------------------ Add Componenets ------------------
@@ -50,6 +50,7 @@ ARCHITECTURE behavior OF project_testbench IS
 	-- If you instatiate multiple modules, you may need them
 	SIGNAL flag,done : STD_LOGIC;
 	SIGNAL read_addr : STD_LOGIC_VECTOR(15 downto 0);
+	SIGNAL main_bus  : STD_LOGIC_VECTOR(15 downto 0);
 	
 	-- ------------------ Add Your Internal Signals (if needed) ------------------
 	
@@ -60,7 +61,8 @@ BEGIN
 		flag_out => flag,
 		done_out => done,
 		read_addr => read_addr,
-		data_in => code(15 downto 0)
+		data_in => code(15 downto 0),
+		main_bus_out => main_bus
 		);
 	-- ------------------ Instantiate modules ------------------
 	-- Instantiate your processor here

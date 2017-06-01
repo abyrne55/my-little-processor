@@ -9,12 +9,13 @@ ENTITY my_little_processor IS
 		data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		flag_out : OUT STD_LOGIC;
 		done_out : OUT STD_LOGIC;
-		read_addr, reg0_out, reg1_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+		c_state_preout: OUT INTEGER;
+		read_addr, reg0_out, reg1_out, main_bus_out, ALU_preout, G_preout, A_preout: OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 END;
 
 ARCHITECTURE behavioural OF my_little_processor IS
-	SIGNAL read_addr_temp, main_bus, R0_output, R1_output, A_output, G_output, ALU_output : std_logic_vector(15 DOWNTO 0);
+	SIGNAL read_addr_temp, main_bus, R0_output, R1_output, A_output, G_output, ALU_output: std_logic_vector(15 DOWNTO 0);
 	SIGNAL R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, A_in, G_in, G_out, extern, done_temp, PC_in, PC_out : STD_LOGIC;
 	SIGNAL read_addr_int : INTEGER;
 	COMPONENT register_16bit
@@ -47,7 +48,8 @@ ARCHITECTURE behavioural OF my_little_processor IS
 			PC_out: OUT STD_LOGIC;
  
 			A_in, G_in, G_out, extern : OUT STD_LOGIC;
-			done : OUT STD_LOGIC
+			done : OUT STD_LOGIC;
+			c_state_preout : OUT INTEGER
 		);
 	END COMPONENT;
 	COMPONENT tristate_16bit
@@ -96,7 +98,8 @@ BEGIN
 		extern => extern, 
 		done => done_temp,
 		PC_in => PC_in,
-		PC_out => PC_out
+		PC_out => PC_out,
+		c_state_preout => c_state_preout
 	);
 
 	register0 : register_16bit
@@ -186,5 +189,9 @@ BEGIN
 	done_out <= done_temp;
 	reg0_out <= R0_output;
 	reg1_out <= R1_output;
+	main_bus_out <= main_bus;
+	ALU_preout <= ALU_output;
+	G_preout <= G_output;
+	A_preout <= A_output;
 
 END behavioural;
