@@ -17,14 +17,15 @@ ARCHITECTURE behavioural OF control_circuit IS
 			state : IN INTEGER;
 			reset: in STD_LOGIC;
 			instr : IN std_logic_vector(3 DOWNTO 0);
+			rx : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
 			ns : OUT INTEGER
 		);
 	END COMPONENT;
 
-	SIGNAL c_state : INTEGER := 0;
+	SIGNAL c_state : INTEGER := 255;
 	SIGNAL n_state : INTEGER := 0;
-	SIGNAL rx : STD_LOGIC_VECTOR(3 DOWNTO 0);-- := "ZZZZ";
-	SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0);-- := "ZZZZ";
+	SIGNAL rx : STD_LOGIC_VECTOR(3 DOWNTO 0):= "ZZZZ";
+	--SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0);-- := "ZZZZ";
 
 BEGIN
 	--instruction <= func(15 DOWNTO 12);
@@ -35,55 +36,61 @@ BEGIN
 	PORT MAP(
 		reset => reset,
 		state => c_state, 
-		instr => func(15 DOWNTO 12), 
+		instr => func(15 DOWNTO 12),
+		rx => func(11 DOWNTO 8),
 		ns => n_state
 	); 
-	PROCESS (c_state, rx, func)
+	PROCESS (c_state, func)
 	BEGIN
+		done <= '0';
 		R0_in <= '0';
+		R0_in <= '0';
+		R0_out <= '0';
+		R0_xor <= '0';
+		R1_in <= '0';
+		R1_out <= '0';
+		R1_xor <= '0';
+		PC_in <= '0';
+		PC_out <= '0';
+		A_in <= '0';
+		G_in <= '0';
+		G_out <= '0';
+		extern <= '0';
+		--rx <= func(11 DOWNTO 8);
+		--ry <= func(7 DOWNTO 4);
+		
 		CASE c_state IS
-			-- IDLE State
+			-- START state
+			WHEN 255 => 
+				done <= '1';
+		
+			-- IDLE States
 			WHEN 0 =>
-				R0_in <= '0';
-				R0_out <= '0';
-				R0_xor <= '0';
-				R1_in <= '0';
-				R1_out <= '0';
-				R1_xor <= '0';
-				PC_in <= '0';
-				PC_out <= '0';
-				A_in <= '0';
-				G_in <= '0';
-				G_out <= '0';
-				extern <= '0';
+				--done <= '1';
+				
+			-- LOAD States
+			WHEN 10 =>
 				done <= '1';
-				rx <= func(11 DOWNTO 8);
-				ry <= func(7 DOWNTO 4);
- 
-				-- LOAD States
-			WHEN 10 => 
-				done <= '0';
-				IF rx = "0000" THEN
-					R0_in <= '1';
-					R1_in <= '0';
-				ELSE
-					R1_in <= '1';
-					R0_in <= '0';
-				END IF;
 				extern <= '1';
-			WHEN 11 => 
+			WHEN 11 => -- RX = 0
+				extern <= '1';
+				R0_in <= '1';
+			WHEN 12 => -- RX = 1
+				extern <= '1';
+				R1_in <= '1';
+			WHEN 13 =>
 				done <= '1';
-			WHEN 12 =>
-				done <= '0';
-				R0_in <= '0';
-				R1_in <= '0';
-			WHEN 13 => 
-				extern <= '0';
-			WHEN 14 =>
-				R0_out <= '0';
-				R1_out <= '0';
+	
+			--WHEN 11 =>
+			--	IF rx = "0000" THEN
+			--		R0_in <= '1';
+			--	ELSE
+			--		R1_in <= '1';
+			--	END IF;
+			--	extern <= '1';
+			--	done <= '0';
  
-				-- MOV States
+			-- MOV States
 			WHEN 20 => 
 				done <= '0';
 				IF rx = "0000" THEN
@@ -187,12 +194,13 @@ BEGIN
 				PC_in <= '0';
  
 			WHEN OTHERS => 
-				G_out <= '0';
-				extern <= '0';
-				R0_in <= '0';
-				R1_in <= '0';
-				R0_out <= '0';
-				R1_out <= '0';
+				--done <= '0';
+				--G_out <= '0';
+				--extern <= '0';
+				--R0_in <= '0';
+				--R1_in <= '0';
+				--R0_out <= '0';
+				--R1_out <= '0';
 				-- GRAD STUDENT STATES
  
 		END CASE;
@@ -207,6 +215,6 @@ BEGIN
 	
 	c_state_preout <= c_state;
 	rx_preout <= rx;
-	ry_preout <= ry;
+	ry_preout <= "ZZZZ";
  
 END behavioural;
