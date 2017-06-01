@@ -17,6 +17,7 @@ ARCHITECTURE behavioural OF instantiate IS
 	SIGNAL flag : std_logic;
 	SIGNAL reg0_out: std_logic_vector(15 downto 0);
 	SIGNAL reg1_out: std_logic_vector(15 downto 0);
+	SIGNAL c_state_preout: INTEGER;
 	COMPONENT binaryto4hex IS
 		PORT ( 
 			binary : IN STD_LOGIC_VECTOR(15 downto 0);
@@ -39,7 +40,8 @@ ARCHITECTURE behavioural OF instantiate IS
 			clock, reset : IN STD_LOGIC;
 			data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			flag_out, done_out : OUT STD_LOGIC;
-			read_addr, reg0_out, reg1_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+			read_addr, reg0_out, reg1_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+			c_state_preout : OUT INTEGER
 		);
 	END COMPONENT;
 BEGIN
@@ -62,7 +64,8 @@ BEGIN
 		done_out => done, 
 		read_addr => read_addr,
 		reg0_out => reg0_out,
-		reg1_out => reg1_out
+		reg1_out => reg1_out,
+		c_state_preout => c_state_preout
 	);
 	bintohex0 : binaryto4hex
 	PORT MAP (
@@ -88,5 +91,5 @@ BEGIN
 --			LEDR <= "000000000000000000";
 --		END IF;
 --	END PROCESS;
-LEDR(15 downto 0) <= reg0_out;
+LEDR(15 downto 0) <=  std_logic_vector(to_unsigned(c_state_preout, 16));
 END behavioural;
