@@ -23,10 +23,12 @@ ARCHITECTURE behavioural OF ram_16bit IS
 	BEGIN
 		-- THIS IS WHERE YOU WRITE THE INSTRUCTIONS --
 		result(0) := "0000000000000000"; --LOAD R0
-		result(1) := "1010101010101010"; --Data
+		result(1) := "0000000000000001"; --Data
 		result(2) := "0000000100000000"; --LOAD R1
-		result(3) := "1111111111111111"; --Data
-		--result(4) := "0010000000010000"; --Add, store in R0
+		result(3) := "1011111111111111"; --Data
+		--result(4) := "0101000000000000"; -- Load PC from R0
+		--result(4) := "0100000000000000"; -- Load PC into R0
+		result(4) := "0010000000010000"; --Add, store in R0
 		--result(5) := "0000000100000000"; --LOAD R1
 		--result(6) := "0000000010001000"; --Data
 		--result(7) := "0010000000010000"; --Add R0 + R1, store in R0

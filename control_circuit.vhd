@@ -22,16 +22,13 @@ ARCHITECTURE behavioural OF control_circuit IS
 		);
 	END COMPONENT;
 
-	SIGNAL c_state : INTEGER := 255;
+	SIGNAL c_state : INTEGER := 255;--255;
 	SIGNAL n_state : INTEGER := 0;
 	SIGNAL rx : STD_LOGIC_VECTOR(3 DOWNTO 0):= "ZZZZ";
 	--SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0);-- := "ZZZZ";
 
 BEGIN
-	--instruction <= func(15 DOWNTO 12);
-	--rx <= func(11 DOWNTO 8);
-	--ry <= func(7 DOWNTO 4);
-	
+
 	instance1 : find_ns
 	PORT MAP(
 		reset => reset,
@@ -56,143 +53,130 @@ BEGIN
 		G_in <= '0';
 		G_out <= '0';
 		extern <= '0';
-		--rx <= func(11 DOWNTO 8);
-		--ry <= func(7 DOWNTO 4);
 		
 		CASE c_state IS
 			-- START state
 			WHEN 255 => 
+--				R0_in <= '0';
+--				R0_in <= '0';
+--				R0_out <= '0';
+--				R0_xor <= '0';
+--				R1_in <= '0';
+--				R1_out <= '0';
+--				R1_xor <= '0';
+--				PC_in <= '0';
+--				PC_out <= '0';
+--				A_in <= '0';
+--				G_in <= '0';
+--				G_out <= '0';
+--				extern <= '0';
 				done <= '1';
-		
+				
 			-- IDLE States
 			WHEN 0 =>
-				--done <= '1';
+--				done <= '0';
+--				R0_in <= '0';
+--				R0_in <= '0';
+--				R0_out <= '0';
+--				R0_xor <= '0';
+--				R1_in <= '0';
+--				R1_out <= '0';
+--				R1_xor <= '0';
+--				PC_in <= '0';
+--				PC_out <= '0';
+--				A_in <= '0';
+--				G_in <= '0';
+--				G_out <= '0';
+--				extern <= '0';
 				
 			-- LOAD States
 			WHEN 10 =>
 				done <= '1';
-				extern <= '1';
-			WHEN 11 => -- RX = 0
+			WHEN 11 =>
+			--Rx = R0
 				extern <= '1';
 				R0_in <= '1';
-			WHEN 12 => -- RX = 1
+			WHEN 12 =>
+			-- Rx = R1
 				extern <= '1';
 				R1_in <= '1';
 			WHEN 13 =>
 				extern <= '1';
 				done <= '1';
 	
-			--WHEN 11 =>
-			--	IF rx = "0000" THEN
-			--		R0_in <= '1';
-			--	ELSE
-			--		R1_in <= '1';
-			--	END IF;
-			--	extern <= '1';
-			--	done <= '0';
- 
 			-- MOV States
-			WHEN 20 => 
-				done <= '0';
-				IF rx = "0000" THEN
-					R0_in <= '1';
-					R1_out <= '1';
-				ELSE
-					R1_in <= '1';
-					R0_out <= '1';
-				END IF;
-			WHEN 21 => 
-				G_out <= '0';
-				extern <= '0';
-				R0_in <= '0';
-				R1_in <= '0';
-				R0_out <= '0';
-				R1_out <= '0';
+			WHEN 20 =>
+			
+			WHEN 21 =>
+			-- Rx = R0
+				R0_in <= '1';
+				R1_out <= '1';
+			WHEN 22 =>
+			-- Rx = R1
+				R1_in <= '1';
+				R0_out <= '1';
+			WHEN 23 => 
+				done <= '1';
  
 				-- ADD States
 			WHEN 30 => 
-				done <= '0';
 				R0_out <= '1';
 				A_in <= '1';
 			WHEN 31 => 
-				R0_out <= '0';
-				A_in <= '0';
-			WHEN 32 => 
 				R1_out <= '1';
 				G_in <= '1';
-			WHEN 33 => 
-				R1_out <= '0';
-				G_in <= '0';
-			WHEN 34 => 
-				A_in <= '0';
-				G_in <= '0';
-				R1_out <= '0';
+			WHEN 32 =>
+			-- Rx = R0
 				G_out <= '1';
-			WHEN 35 =>
-				IF rx = "0000" THEN
-					R0_in <= '1';
-				ELSE
-					R1_in <= '1';
-				END IF;
-			WHEN 36 => 
-				G_out <= '0';
-				extern <= '0';
-				R0_in <= '0';
-				R1_in <= '0';
-				R0_out <= '0';
-				R1_out <= '0';
+				R0_in <= '1';
+			WHEN 33 =>
+			-- Rx = R1
+				G_out <= '1';
+				R1_in <= '1';
+			WHEN 34 => 
+				done <= '1';
  
 				-- XOR States
 			WHEN 40 => 
-				done <= '0';
-				IF rx = "0001" THEN
-					R0_out <= '1';
-				ELSE
+
+			WHEN 41 =>
+			--Rx = R0
 					R1_out <= '1';
-				END IF;
-			WHEN 41 => 
-				IF rx = "0001" THEN
-					R1_xor <= '1';
-				ELSE
 					R0_xor <= '1';
-				END IF;
-			WHEN 42 => 
-				R0_xor <= '0';
-				R1_xor <= '0';
-				G_out <= '0';
-				extern <= '0';
-				R0_in <= '0';
-				R1_in <= '0';
-				R0_out <= '0';
-				R1_out <= '0';
+			WHEN 42 =>
+			--Rx = R1
+					R0_out <= '1';
+					R1_xor <= '1';
+			WHEN 43 => 
+				done <= '1';
 				
 			-- Load PC to Rx
 			WHEN 50 =>
-				done <= '0';
-				IF rx = "0000" THEN
-					R0_in <= '1';
-				ELSIF rx = "0001" THEN
-					R1_in <= '1';
-				END IF;
-				PC_out <= '1';
+				
 			WHEN 51 =>
-				R0_in <= '0';
-				R1_in <= '0';
-				PC_out <= '0';
+			--Rx = R0
+				R0_in <= '1';
+				PC_out <= '1';
+			WHEN 52 =>
+			--Rx = R1
+				R1_in <= '1';
+				PC_out <= '1';
+			WHEN 53 =>
+				done <= '1';
 			
 			-- Load Rx to PC
 			WHEN 60 =>
-				done <= '0';
-				IF rx = "0000" THEN
-					R0_out <= '1';
-				ELSIF rx = "0001" THEN
-					R1_out <= '1';
-				END IF;
-				PC_in <= '1';
+
 			WHEN 61 =>
-				R0_out <= '0';
-				R1_out <= '0';
-				PC_in <= '0';
+			--Rx = R0
+				PC_in <= '1';
+				R0_out <= '1';
+			WHEN 62 =>
+			--Rx = R1
+				PC_in <= '1';
+				R1_out <= '1';
+			WHEN 63 =>
+				done <= '1';
  
 			WHEN OTHERS => 
 				--done <= '0';

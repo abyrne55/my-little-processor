@@ -11,7 +11,7 @@ ENTITY PC IS
 END PC;
 
 ARCHITECTURE behavioural OF PC IS
-SIGNAL addr_temp: INTEGER;
+SIGNAL addr_temp: INTEGER:=0;
 BEGIN
 	PROCESS(clock, done, reset, en_in, input)
 	begin
