@@ -103,7 +103,7 @@ LEDG(7 downto 0) <=  std_logic_vector(to_unsigned(c_state_preout, 8));
 LEDG(8) <= not_key(2);
 
 --Assign a register to 16 LEDs
-LEDR(15 downto 0) <= reg0_out;
+LEDR(15 downto 0) <= read_addr;
 
 -- Assign the flag
 LEDR(17) <= flag;

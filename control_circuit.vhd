@@ -56,38 +56,12 @@ BEGIN
 		
 		CASE c_state IS
 			-- START state
-			WHEN 255 => 
---				R0_in <= '0';
---				R0_in <= '0';
---				R0_out <= '0';
---				R0_xor <= '0';
---				R1_in <= '0';
---				R1_out <= '0';
---				R1_xor <= '0';
---				PC_in <= '0';
---				PC_out <= '0';
---				A_in <= '0';
---				G_in <= '0';
---				G_out <= '0';
---				extern <= '0';
+			WHEN 255 =>
 				done <= '1';
 				
 			-- IDLE State
 			WHEN 0 =>
---				done <= '0';
---				R0_in <= '0';
---				R0_in <= '0';
---				R0_out <= '0';
---				R0_xor <= '0';
---				R1_in <= '0';
---				R1_out <= '0';
---				R1_xor <= '0';
---				PC_in <= '0';
---				PC_out <= '0';
---				A_in <= '0';
---				G_in <= '0';
---				G_out <= '0';
---				extern <= '0';
+				-- Wait for next instruction
 				
 			-- LOAD States
 			WHEN 10 =>
@@ -106,7 +80,7 @@ BEGIN
 	
 			-- MOV States
 			WHEN 20 =>
-			
+				--Decision State
 			WHEN 21 =>
 			-- Rx = R0
 				R0_in <= '1';
@@ -136,9 +110,9 @@ BEGIN
 			WHEN 34 => 
 				done <= '1';
  
-				-- XOR States
+			-- XOR States
 			WHEN 40 => 
-
+				--Decision State
 			WHEN 41 =>
 			--Rx = R0
 					R1_out <= '1';
@@ -150,9 +124,9 @@ BEGIN
 			WHEN 43 => 
 				done <= '1';
 				
-			-- Load PC to Rx
+			-- LDPC, Load PC to Rx
 			WHEN 50 =>
-				
+				--Decision State
 			WHEN 51 =>
 			--Rx = R0
 				R0_in <= '1';
@@ -164,9 +138,9 @@ BEGIN
 			WHEN 53 =>
 				done <= '1';
 			
-			-- Load Rx to PC
+			-- BRANCH, Load Rx to PC
 			WHEN 60 =>
-
+				--Decision State
 			WHEN 61 =>
 			--Rx = R0
 				PC_in <= '1';
@@ -176,17 +150,11 @@ BEGIN
 				PC_in <= '1';
 				R1_out <= '1';
 			WHEN 63 =>
+				R1_out <= '1';
 				done <= '1';
  
 			WHEN OTHERS => 
-				--done <= '0';
-				--G_out <= '0';
-				--extern <= '0';
-				--R0_in <= '0';
-				--R1_in <= '0';
-				--R0_out <= '0';
-				--R1_out <= '0';
-				-- GRAD STUDENT STATES
+				-- Return to IDLE
  
 		END CASE;
 	END PROCESS;
