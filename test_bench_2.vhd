@@ -19,7 +19,7 @@ ARCHITECTURE behavior OF test_bench_2 IS
 	SIGNAL reg1_out: STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL main_bus_out, ALU_preout, G_preout, A_preout: STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL c_state_preout: INTEGER;
-	SIGNAL instr_preout, rx_preout, ry_preout: STD_LOGIC_VECTOR(3 downto 0);
+	SIGNAL instr_preout: STD_LOGIC_VECTOR(3 downto 0);
 	SIGNAL HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7 : STD_LOGIC_VECTOR(6 downto 0);
 	COMPONENT ram_16bit IS
 		PORT (
@@ -38,7 +38,7 @@ ARCHITECTURE behavior OF test_bench_2 IS
 			data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			flag_out, done_out : OUT STD_LOGIC;
 			c_state_preout : OUT INTEGER;
-			instr_preout, rx_preout, ry_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
+			instr_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
 			read_addr, reg0_out, reg1_out,main_bus_out, ALU_preout, G_preout, A_preout : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 		);
 	END COMPONENT;
@@ -74,9 +74,7 @@ BEGIN
 		G_preout => G_preout,
 		A_preout => A_preout,
 		c_state_preout => c_state_preout,
-		instr_preout => instr_preout,
-		rx_preout => rx_preout,
-		ry_preout => ry_preout
+		instr_preout => instr_preout
 	);
 		bintohex0 : binaryto4hex
 	PORT MAP (

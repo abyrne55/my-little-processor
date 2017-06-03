@@ -22,19 +22,19 @@ BEGIN
 		
 bintoseg1: binary_to_sevenSeg PORT MAP (
 			binary_value => binary(15 downto 12),
-			sevenSeg => output0
+			sevenSeg => output3
 			);
 bintoseg2: binary_to_sevenSeg PORT MAP (
 			binary_value => binary(11 downto 8),
-			sevenSeg => output1
+			sevenSeg => output2
 			);
 bintoseg3: binary_to_sevenSeg PORT MAP (
 			binary_value => binary(7 downto 4),
-			sevenSeg => output2
+			sevenSeg => output1
 			);
 bintoseg4: binary_to_sevenSeg PORT MAP (
 			binary_value => binary(3 downto 0),
-			sevenSeg => output3
+			sevenSeg => output0
 			);
 
 

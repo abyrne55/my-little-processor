@@ -6,7 +6,7 @@ ENTITY control_circuit IS
 		clock, reset : IN STD_LOGIC;
 		func : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 		done, A_in, G_in, G_out, extern, R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, PC_in, PC_out : OUT STD_LOGIC:='0';
-		instr_preout, rx_preout, ry_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
+		instr_preout: OUT STD_LOGIC_VECTOR(3 downto 0);
 		c_state_preout : OUT INTEGER
 	);
 END;
@@ -22,10 +22,10 @@ ARCHITECTURE behavioural OF control_circuit IS
 		);
 	END COMPONENT;
 
-	SIGNAL c_state : INTEGER := 255;--255;
+	SIGNAL c_state : INTEGER := 255;
 	SIGNAL n_state : INTEGER := 0;
-	SIGNAL rx : STD_LOGIC_VECTOR(3 DOWNTO 0):= "ZZZZ";
-	--SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0);-- := "ZZZZ";
+	--SIGNAL rx : STD_LOGIC_VECTOR(3 DOWNTO 0):= "ZZZZ";
+	--SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0):= "ZZZZ";
 
 BEGIN
 
@@ -72,7 +72,7 @@ BEGIN
 --				extern <= '0';
 				done <= '1';
 				
-			-- IDLE States
+			-- IDLE State
 			WHEN 0 =>
 --				done <= '0';
 --				R0_in <= '0';
@@ -199,7 +199,5 @@ BEGIN
 	END PROCESS;
 	
 	c_state_preout <= c_state;
-	rx_preout <= rx;
-	ry_preout <= "ZZZZ";
  
 END behavioural;

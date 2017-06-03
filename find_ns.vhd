@@ -29,10 +29,10 @@ BEGIN
 		-- XOR, store in Rx
 		ELSIF state = 0 AND instr = "0011" THEN
 			ns <= 40;
-		-- Store PC in Rx
+		-- LDPC, Store PC in Rx
 		ELSIF state = 0 AND instr = "0100" THEN
 			ns <= 50;
-		-- Load PC from Rx
+		-- BRANCH, Load PC from Rx
 		ELSIF state = 0 AND instr = "0101" THEN
 			ns <= 60;
 
@@ -50,6 +50,7 @@ BEGIN
 		ELSIF state = 13 THEN
 			ns <= 0;
 		
+		-- MOV
 		ELSIF state = 20 THEN
 			IF rx = "0000" THEN
 				ns <= 21;
@@ -62,6 +63,8 @@ BEGIN
 			ns <= 23;
 		ELSIF state = 23 THEN
 			ns <= 0;
+			
+		-- ADD
 		ELSIF state = 30 THEN
 			ns <= 31;
 		ELSIF state = 31 THEN
@@ -76,6 +79,8 @@ BEGIN
 			ns <= 34;
 		ELSIF state = 34 THEN
 			ns <= 0;
+			
+		-- XOR
 		ELSIF state = 40 THEN
 			IF rx = "0000" THEN
 				ns <= 41;
@@ -88,6 +93,8 @@ BEGIN
 			ns <= 43;
 		ELSIF state = 43 THEN
 			ns <= 0;
+			
+		-- LDPC
 		ELSIF state = 50 THEN
 			IF rx = "0000" THEN
 				ns <= 51;
@@ -100,6 +107,8 @@ BEGIN
 			ns <= 53;
 		ELSIF state = 53 THEN
 			ns <= 0;
+			
+		-- BRANCH
 		ELSIF state = 60 THEN
 			IF rx = "0000" THEN
 				ns <= 61;
