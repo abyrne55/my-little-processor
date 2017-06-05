@@ -80,16 +80,14 @@ BEGIN
 	
 			-- MOV States
 			WHEN 20 =>
-				--Decision State
-			WHEN 21 =>
 			-- Rx = R0
 				R0_in <= '1';
 				R1_out <= '1';
-			WHEN 22 =>
+			WHEN 21 =>
 			-- Rx = R1
 				R1_in <= '1';
 				R0_out <= '1';
-			WHEN 23 => 
+			WHEN 22 => 
 				done <= '1';
  
 				-- ADD States
@@ -111,45 +109,39 @@ BEGIN
 				done <= '1';
  
 			-- XOR States
-			WHEN 40 => 
-				--Decision State
-			WHEN 41 =>
+			WHEN 40 =>
 			--Rx = R0
 					R1_out <= '1';
 					R0_xor <= '1';
-			WHEN 42 =>
+			WHEN 41 =>
 			--Rx = R1
 					R0_out <= '1';
 					R1_xor <= '1';
-			WHEN 43 => 
+			WHEN 42 => 
 				done <= '1';
 				
 			-- LDPC, Load PC to Rx
 			WHEN 50 =>
-				--Decision State
-			WHEN 51 =>
 			--Rx = R0
 				R0_in <= '1';
 				PC_out <= '1';
-			WHEN 52 =>
+			WHEN 51 =>
 			--Rx = R1
 				R1_in <= '1';
 				PC_out <= '1';
-			WHEN 53 =>
+			WHEN 52 =>
 				done <= '1';
 			
 			-- BRANCH, Load Rx to PC
 			WHEN 60 =>
-				--Decision State
-			WHEN 61 =>
 			--Rx = R0
 				PC_in <= '1';
 				R0_out <= '1';
-			WHEN 62 =>
+			WHEN 61 =>
 			--Rx = R1
 				PC_in <= '1';
 				R1_out <= '1';
-			WHEN 63 =>
+			WHEN 62 =>
 				R1_out <= '1';
 				done <= '1';
  

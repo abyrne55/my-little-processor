@@ -22,19 +22,35 @@ BEGIN
 			ns <= 10;
 		-- MOV Ry into Rx
 		ELSIF state = 0 AND instr = "0001" THEN
-			ns <= 20;
+			IF rx = "0000" THEN
+				ns <= 20;
+			ELSIF rx = "0001" THEN
+				ns <= 21;
+			END IF;
 		-- ADD, store in Rx
 		ELSIF state = 0 AND instr = "0010" THEN
 			ns <= 30;
 		-- XOR, store in Rx
 		ELSIF state = 0 AND instr = "0011" THEN
-			ns <= 40;
+			IF rx = "0000" THEN
+				ns <= 40;
+			ELSIF rx = "0001" THEN
+				ns <= 41;
+			END IF;
 		-- LDPC, Store PC in Rx
 		ELSIF state = 0 AND instr = "0100" THEN
-			ns <= 50;
+			IF rx = "0000" THEN
+				ns <= 50;
+			ELSIF rx = "0001" THEN
+				ns <= 51;
+			END IF;
 		-- BRANCH, Load PC from Rx
 		ELSIF state = 0 AND instr = "0101" THEN
-			ns <= 60;
+			IF rx = "0000" THEN
+				ns <= 60;
+			ELSIF rx = "0001" THEN
+				ns <= 61;
+			END IF;
 
 		-- LOAD
 		ELSIF state = 10 THEN
@@ -52,16 +68,10 @@ BEGIN
 		
 		-- MOV
 		ELSIF state = 20 THEN
-			IF rx = "0000" THEN
-				ns <= 21;
-			ELSE
-				ns <= 22;
-			END IF;
+			ns <= 22;
 		ELSIF state = 21 THEN
-			ns <= 23;
+			ns <= 22;
 		ELSIF state = 22 THEN
-			ns <= 23;
-		ELSIF state = 23 THEN
 			ns <= 0;
 			
 		-- ADD
@@ -82,44 +92,26 @@ BEGIN
 			
 		-- XOR
 		ELSIF state = 40 THEN
-			IF rx = "0000" THEN
-				ns <= 41;
-			ELSE
-				ns <= 42;
-			END IF;
+			ns <= 42;
 		ELSIF state = 41 THEN
-			ns <= 43;
+			ns <= 42;
 		ELSIF state = 42 THEN
-			ns <= 43;
-		ELSIF state = 43 THEN
 			ns <= 0;
 			
 		-- LDPC
 		ELSIF state = 50 THEN
-			IF rx = "0000" THEN
-				ns <= 51;
-			ELSE
-				ns <= 52;
-			END IF;
+			ns <= 52;
 		ELSIF state = 51 THEN
-			ns <= 53;
+			ns <= 52;
 		ELSIF state = 52 THEN
-			ns <= 53;
-		ELSIF state = 53 THEN
 			ns <= 0;
 			
 		-- BRANCH
 		ELSIF state = 60 THEN
-			IF rx = "0000" THEN
-				ns <= 61;
-			ELSE
-				ns <= 62;
-			END IF;
+			ns <= 62;
 		ELSIF state = 61 THEN
-			ns <= 63;
+			ns <= 62;
 		ELSIF state = 62 THEN
-			ns <= 63;
-		ELSIF state = 63 THEN
 			ns <= 0;
 		ELSE
 			ns <= 0;
