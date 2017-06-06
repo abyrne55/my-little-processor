@@ -11,12 +11,12 @@ ENTITY my_little_processor IS
 		done_out : OUT STD_LOGIC;
 		c_state_preout: OUT INTEGER;
 		instr_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
-		read_addr, reg0_out, reg1_out, main_bus_out, ALU_preout, G_preout, A_preout: OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+		read_addr, reg0_out, reg1_out, main_bus_out, Adder_preout, G_preout, A_preout: OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 END;
 
 ARCHITECTURE behavioural OF my_little_processor IS
-	SIGNAL read_addr_temp, main_bus, R0_output, R1_output, A_output, G_output, ALU_output: std_logic_vector(15 DOWNTO 0);
+	SIGNAL read_addr_temp, main_bus, R0_output, R1_output, A_output, G_output, Adder_output: std_logic_vector(15 DOWNTO 0);
 	SIGNAL R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, A_in, G_in, G_out, extern, done_temp, PC_in, PC_out : STD_LOGIC;
 	SIGNAL read_addr_int : INTEGER;
 	COMPONENT register_16bit
@@ -60,7 +60,7 @@ ARCHITECTURE behavioural OF my_little_processor IS
 			output : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 		);
 	END COMPONENT;
-	COMPONENT ALU
+	COMPONENT Adder
 		PORT (
 			A, B : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			output : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
@@ -136,7 +136,7 @@ BEGIN
 
 	registerG : register_16bit
 	PORT MAP(
-		input => ALU_output, 
+		input => Adder_output, 
 		enable => G_in, 
 		reset => reset, 
 		clock => clock, 
@@ -178,11 +178,11 @@ BEGIN
 		output => main_bus
 	);
 
-	ALU0 : ALU
+	Adder0 : Adder
 	PORT MAP(
 		A => A_output, 
 		B => main_bus, 
-		output => ALU_output, 
+		output => Adder_output, 
 		flag => flag_out
 	);
 	
@@ -192,7 +192,7 @@ BEGIN
 	reg0_out <= R0_output;
 	reg1_out <= R1_output;
 	main_bus_out <= main_bus;
-	ALU_preout <= ALU_output;
+	Adder_preout <= Adder_output;
 	G_preout <= G_output;
 	A_preout <= A_output;
 

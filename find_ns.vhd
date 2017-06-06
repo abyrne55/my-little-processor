@@ -6,14 +6,14 @@ ENTITY find_ns IS
 		state : IN INTEGER;
 		reset: in STD_LOGIC;
 		instr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-		rx : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+		rx, ry : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
 		ns : OUT INTEGER
 	);
 END find_ns;
 
 ARCHITECTURE behavioural OF find_ns IS
 BEGIN
-	PROCESS (state, instr, reset, rx)
+	PROCESS (state, instr, reset, rx, ry)
 	BEGIN
 		IF reset = '1' THEN
 			ns <= 255;
@@ -22,20 +22,24 @@ BEGIN
 			ns <= 10;
 		-- MOV Ry into Rx
 		ELSIF state = 0 AND instr = "0001" THEN
-			IF rx = "0000" THEN
+			IF rx = "0000"  AND ry = "0001" THEN
 				ns <= 20;
-			ELSIF rx = "0001" THEN
+			ELSIF rx = "0001" AND ry = "0000" THEN
 				ns <= 21;
+			ELSE
+				ns <= 255;
 			END IF;
 		-- ADD, store in Rx
 		ELSIF state = 0 AND instr = "0010" THEN
 			ns <= 30;
 		-- XOR, store in Rx
 		ELSIF state = 0 AND instr = "0011" THEN
-			IF rx = "0000" THEN
+			IF rx = "0000" AND ry = "0001" THEN
 				ns <= 40;
-			ELSIF rx = "0001" THEN
+			ELSIF rx = "0001" AND ry = "0000" THEN
 				ns <= 41;
+			ELSE
+				ns <= 255;
 			END IF;
 		-- LDPC, Store PC in Rx
 		ELSIF state = 0 AND instr = "0100" THEN
@@ -43,6 +47,8 @@ BEGIN
 				ns <= 50;
 			ELSIF rx = "0001" THEN
 				ns <= 51;
+			ELSE
+				ns <= 255;
 			END IF;
 		-- BRANCH, Load PC from Rx
 		ELSIF state = 0 AND instr = "0101" THEN
@@ -50,14 +56,18 @@ BEGIN
 				ns <= 60;
 			ELSIF rx = "0001" THEN
 				ns <= 61;
+			ELSE
+				ns <= 255;
 			END IF;
 
 		-- LOAD
 		ELSIF state = 10 THEN
 			IF rx = "0000" THEN
 				ns <= 11;
-			ELSE
+			ELSIF rx = "0001" THEN
 				ns <= 12;
+			ELSE
+				ns <= 255;
 			END IF;
 		ELSIF state = 11 THEN
 			ns <= 13;
@@ -78,10 +88,12 @@ BEGIN
 		ELSIF state = 30 THEN
 			ns <= 31;
 		ELSIF state = 31 THEN
-			IF rx = "0000" THEN
+			IF rx = "0000" AND ry = "0001" THEN
 				ns <= 32;
-			ELSE
+			ELSIF rx = "0001" AND ry = "0000" THEN
 				ns <= 33;
+			ELSE
+				ns <= 255;
 			END IF;
 		ELSIF state = 32 THEN
 			ns <= 34;

@@ -17,7 +17,7 @@ ARCHITECTURE behavior OF test_bench_2 IS
 	SIGNAL LEDR: STD_LOGIC_VECTOR(17 downto 0);
 	SIGNAL reg0_out: STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL reg1_out: STD_LOGIC_VECTOR(15 DOWNTO 0);
-	SIGNAL main_bus_out, ALU_preout, G_preout, A_preout: STD_LOGIC_VECTOR(15 DOWNTO 0);
+	SIGNAL main_bus_out, Adder_preout, G_preout, A_preout: STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL c_state_preout: INTEGER;
 	SIGNAL instr_preout: STD_LOGIC_VECTOR(3 downto 0);
 	SIGNAL HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7 : STD_LOGIC_VECTOR(6 downto 0);
@@ -39,7 +39,7 @@ ARCHITECTURE behavior OF test_bench_2 IS
 			flag_out, done_out : OUT STD_LOGIC;
 			c_state_preout : OUT INTEGER;
 			instr_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
-			read_addr, reg0_out, reg1_out,main_bus_out, ALU_preout, G_preout, A_preout : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+			read_addr, reg0_out, reg1_out,main_bus_out, Adder_preout, G_preout, A_preout : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 		);
 	END COMPONENT;
 	COMPONENT binaryto4hex IS
@@ -70,7 +70,7 @@ BEGIN
 		reg0_out => reg0_out,
 		reg1_out => reg1_out,
 		main_bus_out => main_bus_out,
-		ALU_preout => ALU_preout,
+		Adder_preout => Adder_preout,
 		G_preout => G_preout,
 		A_preout => A_preout,
 		c_state_preout => c_state_preout,

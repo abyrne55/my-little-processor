@@ -17,7 +17,7 @@ ARCHITECTURE behavioural OF control_circuit IS
 			state : IN INTEGER;
 			reset: in STD_LOGIC;
 			instr : IN std_logic_vector(3 DOWNTO 0);
-			rx : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+			rx, ry : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
 			ns : OUT INTEGER
 		);
 	END COMPONENT;
@@ -35,6 +35,7 @@ BEGIN
 		state => c_state, 
 		instr => func(15 DOWNTO 12),
 		rx => func(11 DOWNTO 8),
+		ry => func(7 downto 4),
 		ns => n_state
 	); 
 	PROCESS (c_state, func)
@@ -76,6 +77,8 @@ BEGIN
 				R1_in <= '1';
 			WHEN 13 =>
 				extern <= '1';
+				done <= '1';
+			WHEN 14 =>
 				done <= '1';
 	
 			-- MOV States
