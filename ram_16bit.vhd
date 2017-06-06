@@ -23,15 +23,23 @@ ARCHITECTURE behavioural OF ram_16bit IS
 	BEGIN
 		-- THIS IS WHERE YOU WRITE THE INSTRUCTIONS --
 		result(0) := "0000000000000000"; --LOAD R0
-		result(1) := "1111000011110000"; --Data
+		result(1) := "1111111111111110"; --Data
 		result(2) := "0000000100000000"; --LOAD R1
-		result(3) := "0000000000000000"; --Data
-		result(4) := "0001000100000000"; --MOV R0 to R1
-		result(5) := "0000000100000000"; --LOAD R1
-		result(6) := "0000000000000000"; --Data
-		result(7) := "0100000000000000"; --Load PC into R0
-		result(8) := "0101000100000000"; -- Load PC from R1
+		result(3) := "0000000000000011"; --Data
+		result(4) := "0100000100000000"; --LDPC to R1
+		result(5) := "0110000000000000"; --SUB, store in R0
+		result(6) := "0101000100000000"; --BRANCH from R1
+		result(7) := "0000000000000000"; --Should be unreachable
+		result(8) := "0000000000000000"; --Should be unreachable
+		result(9) := "0000000100000000"; --Should be unreachable
+		result(10) := "0000000000000000"; --Should be unreachable
 		
+		--result(4) := "0001000100000000"; --MOV R0 to R1
+		--result(5) := "0000000100000000"; --LOAD R1
+		--result(6) := "0000000000000000"; --Data
+		--result(7) := "0100000000000000"; --Load PC into R0
+		--result(8) := "0101000100000000"; -- Load PC from R1
+	
 		--result(4) := "0100000000000000"; -- Load PC into R0
 		--result(4) := "0010000100000000"; --Add, store in R0
 		--result(5) := "0000000100000000"; --LOAD R1

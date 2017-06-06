@@ -18,6 +18,7 @@ END;
 ARCHITECTURE behavioural OF my_little_processor IS
 	SIGNAL read_addr_temp, main_bus, R0_output, R1_output, A_output, G_output, ALU_output: std_logic_vector(15 DOWNTO 0);
 	SIGNAL R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, A_in, G_in, G_out, extern, done_temp, PC_in, PC_out : STD_LOGIC;
+	SIGNAL ALU_opcode: STD_LOGIC_VECTOR(2 downto 0);
 	SIGNAL read_addr_int : INTEGER;
 	COMPONENT register_16bit
 		PORT (
@@ -50,6 +51,7 @@ ARCHITECTURE behavioural OF my_little_processor IS
 			instr_preout: OUT STD_LOGIC_VECTOR(3 downto 0);
 			A_in, G_in, G_out, extern : OUT STD_LOGIC;
 			done : OUT STD_LOGIC;
+			opcode : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
 			c_state_preout : OUT INTEGER
 		);
 	END COMPONENT;
@@ -63,6 +65,7 @@ ARCHITECTURE behavioural OF my_little_processor IS
 	COMPONENT ALU
 		PORT (
 			A, B : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+			opcode : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 			output : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
 			flag : OUT STD_LOGIC
 		);
@@ -100,6 +103,8 @@ BEGIN
 		done => done_temp,
 		PC_in => PC_in,
 		PC_out => PC_out,
+		opcode => ALU_opcode,
+		
 		c_state_preout => c_state_preout,
 		instr_preout => instr_preout
 	);
@@ -182,6 +187,7 @@ BEGIN
 	PORT MAP(
 		A => A_output, 
 		B => main_bus, 
+		opcode => ALU_opcode,
 		output => ALU_output, 
 		flag => flag_out
 	);

@@ -6,6 +6,7 @@ ENTITY control_circuit IS
 		clock, reset : IN STD_LOGIC;
 		func : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 		done, A_in, G_in, G_out, extern, R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, PC_in, PC_out : OUT STD_LOGIC:='0';
+		opcode : OUT STD_LOGIC_VECTOR(2 downto 0) := "000";
 		instr_preout: OUT STD_LOGIC_VECTOR(3 downto 0);
 		c_state_preout : OUT INTEGER
 	);
@@ -53,6 +54,7 @@ BEGIN
 		G_in <= '0';
 		G_out <= '0';
 		extern <= '0';
+		opcode <= "000";
 		
 		CASE c_state IS
 			-- START state
@@ -92,37 +94,60 @@ BEGIN
 			WHEN 23 => 
 				done <= '1';
  
-				-- ADD States
-			WHEN 30 => 
+			-- ADD States
+			WHEN 30 =>
 				R0_out <= '1';
 				A_in <= '1';
-			WHEN 31 => 
+			WHEN 31 =>
+				opcode <= "001";
 				R1_out <= '1';
 				G_in <= '1';
 			WHEN 32 =>
 			-- Rx = R0
+				opcode <= "001";
 				G_out <= '1';
 				R0_in <= '1';
 			WHEN 33 =>
 			-- Rx = R1
+				opcode <= "001";
 				G_out <= '1';
 				R1_in <= '1';
-			WHEN 34 => 
+			WHEN 34 =>
 				done <= '1';
  
 			-- XOR States
-			WHEN 40 => 
-				--Decision State
+			WHEN 40 =>
+				R0_out <= '1';
+				A_in <= '1';
 			WHEN 41 =>
-			--Rx = R0
-					R1_out <= '1';
-					R0_xor <= '1';
+				opcode <= "110";
+				R1_out <= '1';
+				G_in <= '1';
 			WHEN 42 =>
-			--Rx = R1
-					R0_out <= '1';
-					R1_xor <= '1';
-			WHEN 43 => 
+			-- Rx = R0
+				opcode <= "110";
+				G_out <= '1';
+				R0_in <= '1';
+			WHEN 43 =>
+			-- Rx = R1
+				opcode <= "110";
+				G_out <= '1';
+				R1_in <= '1';
+			WHEN 44 =>
 				done <= '1';
+
+			--WHEN 40 => 
+			--	--Decision State
+			--WHEN 41 =>
+			----Rx = R0
+			--		R1_out <= '1';
+			--		R0_xor <= '1';
+			--WHEN 42 =>
+			----Rx = R1
+			--		R0_out <= '1';
+			--		R1_xor <= '1';
+			--WHEN 43 => 
+			--	done <= '1';
 				
 			-- LDPC, Load PC to Rx
 			WHEN 50 =>
@@ -143,14 +168,40 @@ BEGIN
 				--Decision State
 			WHEN 61 =>
 			--Rx = R0
-				PC_in <= '1';
 				R0_out <= '1';
 			WHEN 62 =>
-			--Rx = R1
+			--Rx = R0
+				R0_out <= '1';
 				PC_in <= '1';
-				R1_out <= '1';
 			WHEN 63 =>
+			--Rx = R1
 				R1_out <= '1';
+			WHEN 64 =>
+			--Rx = R1
+				R1_out <= '1';
+				PC_in <= '1';
+			WHEN 65 =>
+				done <= '1';
+				
+			-- SUB States
+			WHEN 70 =>
+				R0_out <= '1';
+				A_in <= '1';
+			WHEN 71 =>
+				opcode <= "010";
+				R1_out <= '1';
+				G_in <= '1';
+			WHEN 72 =>
+			-- Rx = R0
+				opcode <= "010";
+				G_out <= '1';
+				R0_in <= '1';
+			WHEN 73 =>
+			-- Rx = R1
+				opcode <= "010";
+				G_out <= '1';
+				R1_in <= '1';
+			WHEN 74 =>
 				done <= '1';
  
 			WHEN OTHERS => 
