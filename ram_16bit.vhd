@@ -26,7 +26,7 @@ ARCHITECTURE behavioural OF ram_16bit IS
 		result(1) := "1111000011110000"; --Data
 		result(2) := "0000000100000000"; --LOAD R1
 		result(3) := "0001101100001100"; --Data
-		result(4) := "0001000100000000"; --MOV R0 to R1
+		result(4) := "0110000000010000"; --MOV R0 to R1
 		result(5) := "0000000100000000"; --LOAD R1
 		result(6) := "0000000000000000"; --Data
 		result(7) := "0100000000000000"; --Load PC into R0

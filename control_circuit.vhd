@@ -147,6 +147,53 @@ BEGIN
 			WHEN 62 =>
 				R1_out <= '1';
 				done <= '1';
+				
+			--Double Ry, store in Rx
+			WHEN 701 =>
+			--Rx = R0, Ry = R0
+				R0_out <= '1';
+				A_in <= '1';
+			WHEN 702 =>
+				R0_out <= '1';
+				G_in <= '1';
+			WHEN 703 =>
+				G_out <= '1';
+				R0_in <= '1';
+			WHEN 711 =>
+			--Rx = R1, Ry = R0
+				R0_out <= '1';
+				A_in <= '1';
+				G_in <= '1';
+			WHEN 712 =>
+				R0_out <= '1';
+				G_in <= '1';
+			WHEN 713 =>
+				G_out <= '1';
+				R1_in <= '1';
+			WHEN 721 =>
+			--Rx = R0, Ry = R1
+				R1_out <= '1';
+				A_in <= '1';
+				G_in <= '1';
+			WHEN 722 =>
+				R1_out <= '1';
+				G_in <= '1';
+			WHEN 723 =>
+				G_out <= '1';
+				R0_in <= '1';
+			WHEN 731 =>
+			--Rx = R1, Ry = R1
+				R1_out <= '1';
+				A_in <= '1';
+				G_in <= '1';
+			WHEN 732 =>
+				R1_out <= '1';
+				G_in <= '1';
+			WHEN 733 =>
+				G_out <= '1';
+				R1_in <= '1';
+			WHEN 740 =>
+				done <= '1';
  
 			WHEN OTHERS => 
 				-- Return to IDLE

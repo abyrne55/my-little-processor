@@ -59,7 +59,19 @@ BEGIN
 			ELSE
 				ns <= 255;
 			END IF;
-
+		-- Double Ry, store in Rx
+		ELSIF state = 0 AND instr = "0110" THEN
+			IF rx = "0000" AND ry = "0000" THEN
+				ns <= 701;
+			ELSIF rx = "0001" AND ry = "0000" THEN
+				ns <= 711;
+			ELSIF rx = "0000" AND ry = "0001" THEN
+				ns <= 721;
+			ELSIF rx = "0001" AND ry = "0001" THEN
+				ns <= 731;
+			ELSE
+				ns <= 255;
+			END IF;
 		-- LOAD
 		ELSIF state = 10 THEN
 			IF rx = "0000" THEN
@@ -125,8 +137,38 @@ BEGIN
 			ns <= 62;
 		ELSIF state = 62 THEN
 			ns <= 0;
-		ELSE
+			
+		-- Double Ry, store in Rx
+		ELSIF state = 701 THEN
+			ns <= 702;
+		ELSIF state = 702 THEN
+			ns <= 703;
+		ELSIF state = 703 THEN
+			ns <= 740;
+		ELSIF state = 711 THEN
+			ns <= 712;
+		ELSIF state = 712 THEN
+			ns <= 713;
+		ELSIF state = 713 THEN
+			ns <= 740;
+		ELSIF state = 721 THEN
+			ns <= 722;
+		ELSIF state = 722 THEN
+			ns <= 723;
+		ELSIF state = 723 THEN
+			ns <= 740;
+		ELSIF state = 731 THEN
+			ns <= 732;
+		ELSIF state = 732 THEN
+			ns <= 733;
+		ELSIF state = 733 THEN
+			ns <= 740;
+		ELSIF state = 740 THEN
 			ns <= 0;
+		ELSIF state = 255 THEN
+			ns <= 0;
+		ELSE
+			ns <= 255;
 		END IF;
 	END PROCESS;
 END behavioural;
