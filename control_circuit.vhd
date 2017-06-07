@@ -6,8 +6,7 @@ ENTITY control_circuit IS
 		clock, reset : IN STD_LOGIC;
 		func : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 		done, A_in, G_in, G_out, extern, R0_in, R1_in, R0_out, R1_out, R0_xor, R1_xor, PC_in, PC_out : OUT STD_LOGIC:='0';
-		instr_preout: OUT STD_LOGIC_VECTOR(3 downto 0);
-		c_state_preout : OUT INTEGER
+		c_state: OUT INTEGER
 	);
 END;
 
@@ -22,23 +21,21 @@ ARCHITECTURE behavioural OF control_circuit IS
 		);
 	END COMPONENT;
 
-	SIGNAL c_state : INTEGER := 255;
+	SIGNAL c_state_temp : INTEGER := 255;
 	SIGNAL n_state : INTEGER := 0;
-	--SIGNAL rx : STD_LOGIC_VECTOR(3 DOWNTO 0):= "ZZZZ";
-	--SIGNAL ry : STD_LOGIC_VECTOR(3 DOWNTO 0):= "ZZZZ";
 
 BEGIN
 
 	instance1 : find_ns
 	PORT MAP(
 		reset => reset,
-		state => c_state, 
+		state => c_state_temp, 
 		instr => func(15 DOWNTO 12),
 		rx => func(11 DOWNTO 8),
 		ry => func(7 downto 4),
 		ns => n_state
 	); 
-	PROCESS (c_state, func)
+	PROCESS (c_state_temp, func)
 	BEGIN
 		done <= '0';
 		R0_in <= '0';
@@ -55,7 +52,7 @@ BEGIN
 		G_out <= '0';
 		extern <= '0';
 		
-		CASE c_state IS
+		CASE c_state_temp IS
 			-- START state
 			WHEN 255 =>
 				done <= '1';
@@ -204,10 +201,10 @@ BEGIN
 	PROCESS (clock)
 		BEGIN
 			IF rising_edge(clock) THEN
-				c_state <= n_state;
+				c_state_temp <= n_state;
 			END IF;
 	END PROCESS;
 	
-	c_state_preout <= c_state;
+	c_state <= c_state_temp;
  
 END behavioural;

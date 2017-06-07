@@ -17,10 +17,7 @@ ARCHITECTURE behavior OF test_bench_2 IS
 	SIGNAL LEDR: STD_LOGIC_VECTOR(17 downto 0);
 	SIGNAL reg0_out: STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL reg1_out: STD_LOGIC_VECTOR(15 DOWNTO 0);
-	SIGNAL main_bus_out, Adder_preout, G_preout, A_preout: STD_LOGIC_VECTOR(15 DOWNTO 0);
-	SIGNAL c_state_preout: INTEGER;
-	SIGNAL instr_preout: STD_LOGIC_VECTOR(3 downto 0);
-	SIGNAL HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,HEX6,HEX7 : STD_LOGIC_VECTOR(6 downto 0);
+	SIGNAL c_state: INTEGER;
 	COMPONENT ram_16bit IS
 		PORT (
 			clock : IN STD_LOGIC;
@@ -37,17 +34,11 @@ ARCHITECTURE behavior OF test_bench_2 IS
 			clock, reset : IN STD_LOGIC;
 			data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			flag_out, done_out : OUT STD_LOGIC;
-			c_state_preout : OUT INTEGER;
-			instr_preout : OUT STD_LOGIC_VECTOR(3 downto 0);
-			read_addr, reg0_out, reg1_out,main_bus_out, Adder_preout, G_preout, A_preout : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+			c_state: OUT INTEGER;
+			read_addr, reg0_out, reg1_out: OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 		);
 	END COMPONENT;
-	COMPONENT binaryto4hex IS
-		PORT ( 
-			binary : IN STD_LOGIC_VECTOR(15 downto 0);
-			output0, output1, output2, output3 : OUT STD_LOGIC_VECTOR(6 downto 0)
-		);
-	END COMPONENT;
+
 BEGIN
 	ram : ram_16bit
 	PORT MAP(
@@ -69,29 +60,8 @@ BEGIN
 		read_addr => read_addr,
 		reg0_out => reg0_out,
 		reg1_out => reg1_out,
-		main_bus_out => main_bus_out,
-		Adder_preout => Adder_preout,
-		G_preout => G_preout,
-		A_preout => A_preout,
-		c_state_preout => c_state_preout,
-		instr_preout => instr_preout
+		c_state => c_state
 	);
-		bintohex0 : binaryto4hex
-	PORT MAP (
-			binary => reg0_out,
-			output0 => HEX0,
-			output1 => HEX1,
-			output2 => HEX2,
-			output3 => HEX3
-		);
-	bintohex1 : binaryto4hex
-	PORT MAP (
-			binary => reg1_out,
-			output0 => HEX4,
-			output1 => HEX5,
-			output2 => HEX6,
-			output3 => HEX7
-		);
 	PROCESS (flag)
 	BEGIN
 		IF flag = '1' THEN
@@ -108,7 +78,7 @@ BEGIN
 		end case;
 	end process;
 	stim_proc: process 
-	begin         
+	begin
 		wait for 50 ns;
 		clk_in <= not(clk_in);
 	end process;

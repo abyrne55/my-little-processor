@@ -14,15 +14,17 @@ ENTITY Adder IS
 END Adder;
 
 ARCHITECTURE behavioural OF Adder IS
+SIGNAL out_temp: INTEGER;
 BEGIN
-	PROCESS(A,B)
+out_temp <= to_integer(unsigned(A)) + to_integer(unsigned(B));
+	PROCESS(out_temp)
 	begin
-		IF to_integer(unsigned(A+B)) > 65535 then
+		IF out_temp <= 65535 THEN
+			flag <= '0';
+			output <= std_logic_vector(to_unsigned(out_temp, 16));
+		ELSE
 			flag <= '1';
 			output <= "0000000000000000";
-		ELSE
-			flag <= '0';
-			output <= A + B;
 		END IF;
 	END PROCESS;
 END behavioural;

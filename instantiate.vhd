@@ -20,7 +20,7 @@ ARCHITECTURE behavioural OF instantiate IS
 	SIGNAL flag : std_logic;
 	SIGNAL reg0_out: std_logic_vector(15 downto 0);
 	SIGNAL reg1_out: std_logic_vector(15 downto 0);
-	SIGNAL c_state_preout: INTEGER;
+	SIGNAL c_state: INTEGER;
 	COMPONENT binaryto4hex IS
 		PORT ( 
 			binary : IN STD_LOGIC_VECTOR(15 downto 0);
@@ -44,7 +44,7 @@ ARCHITECTURE behavioural OF instantiate IS
 			data_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 			flag_out, done_out : OUT STD_LOGIC;
 			read_addr, reg0_out, reg1_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-			c_state_preout : OUT INTEGER
+			c_state: OUT INTEGER
 		);
 	END COMPONENT;
 BEGIN
@@ -68,7 +68,7 @@ BEGIN
 		read_addr => read_addr,
 		reg0_out => reg0_out,
 		reg1_out => reg1_out,
-		c_state_preout => c_state_preout
+		c_state => c_state
 	);
 	bintohex0 : binaryto4hex
 	PORT MAP (
@@ -99,7 +99,7 @@ BEGIN
 not_key <= not KEY;
 
 -- Assign LEDG's above KEYs to current state
-LEDG(7 downto 0) <=  std_logic_vector(to_unsigned(c_state_preout, 8));
+LEDG(7 downto 0) <=  std_logic_vector(to_unsigned(c_state, 8));
 LEDG(8) <= not_key(2);
 
 --Assign a register to 16 LEDs
