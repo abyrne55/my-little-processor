@@ -109,11 +109,5 @@ LEDR(15 downto 0) <= read_addr;
 LEDR(17) <= flag;
 LEDR(16) <= flag;
 
---Assign the 8 LSBs of each register values to 16 LEDS
---LEDR(7 downto 0) <= reg1_out(15 downto 8);
---LEDR(15 downto 8) <= reg0_out(15 downto 8);
-
--- LEDR Test Pattern
---LEDR <= "010101010101010101";
 
 END behavioural;
