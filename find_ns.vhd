@@ -3,11 +3,11 @@ USE ieee.std_logic_1164.ALL;
 
 ENTITY find_ns IS
 	PORT (
-		state : IN INTEGER;
-		reset: in STD_LOGIC;
-		instr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-		rx, ry : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-		ns : OUT INTEGER
+		state   : IN INTEGER;
+		reset   : IN STD_LOGIC;
+		instr   : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+		rx, ry  : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+		ns      : OUT INTEGER
 	);
 END find_ns;
 
@@ -17,22 +17,22 @@ BEGIN
 	BEGIN
 		IF reset = '1' THEN
 			ns <= 255;
-		-- LOAD Rx
+			-- LOAD Rx
 		ELSIF state = 0 AND instr = "0000" THEN
 			ns <= 10;
-		-- MOV Ry into Rx
+			-- MOV Ry into Rx
 		ELSIF state = 0 AND instr = "0001" THEN
-			IF rx = "0000"  AND ry = "0001" THEN
+			IF rx = "0000" AND ry = "0001" THEN
 				ns <= 20;
 			ELSIF rx = "0001" AND ry = "0000" THEN
 				ns <= 21;
 			ELSE
 				ns <= 255;
 			END IF;
-		-- ADD, store in Rx
+			-- ADD, store in Rx
 		ELSIF state = 0 AND instr = "0010" THEN
 			ns <= 30;
-		-- XOR, store in Rx
+			-- XOR, store in Rx
 		ELSIF state = 0 AND instr = "0011" THEN
 			IF rx = "0000" AND ry = "0001" THEN
 				ns <= 40;
@@ -41,7 +41,7 @@ BEGIN
 			ELSE
 				ns <= 255;
 			END IF;
-		-- LDPC, Store PC in Rx
+			-- LDPC, Store PC in Rx
 		ELSIF state = 0 AND instr = "0100" THEN
 			IF rx = "0000" THEN
 				ns <= 50;
@@ -50,7 +50,7 @@ BEGIN
 			ELSE
 				ns <= 255;
 			END IF;
-		-- BRANCH, Load PC from Rx
+			-- BRANCH, Load PC from Rx
 		ELSIF state = 0 AND instr = "0101" THEN
 			IF rx = "0000" THEN
 				ns <= 60;
@@ -59,7 +59,7 @@ BEGIN
 			ELSE
 				ns <= 255;
 			END IF;
-		-- Double Ry, store in Rx
+			-- Double Ry, store in Rx
 		ELSIF state = 0 AND instr = "0110" THEN
 			IF rx = "0000" AND ry = "0000" THEN
 				ns <= 701;
@@ -72,7 +72,7 @@ BEGIN
 			ELSE
 				ns <= 255;
 			END IF;
-		-- LOAD
+			-- LOAD
 		ELSIF state = 10 THEN
 			IF rx = "0000" THEN
 				ns <= 11;
@@ -87,16 +87,16 @@ BEGIN
 			ns <= 13;
 		ELSIF state = 13 THEN
 			ns <= 0;
-		
-		-- MOV
+ 
+			-- MOV
 		ELSIF state = 20 THEN
 			ns <= 22;
 		ELSIF state = 21 THEN
 			ns <= 22;
 		ELSIF state = 22 THEN
 			ns <= 0;
-			
-		-- ADD
+ 
+			-- ADD
 		ELSIF state = 30 THEN
 			ns <= 31;
 		ELSIF state = 31 THEN
@@ -113,32 +113,32 @@ BEGIN
 			ns <= 34;
 		ELSIF state = 34 THEN
 			ns <= 0;
-			
-		-- XOR
+ 
+			-- XOR
 		ELSIF state = 40 THEN
 			ns <= 42;
 		ELSIF state = 41 THEN
 			ns <= 42;
 		ELSIF state = 42 THEN
 			ns <= 0;
-			
-		-- LDPC
+ 
+			-- LDPC
 		ELSIF state = 50 THEN
 			ns <= 52;
 		ELSIF state = 51 THEN
 			ns <= 52;
 		ELSIF state = 52 THEN
 			ns <= 0;
-			
-		-- BRANCH
+ 
+			-- BRANCH
 		ELSIF state = 60 THEN
 			ns <= 62;
 		ELSIF state = 61 THEN
 			ns <= 62;
 		ELSIF state = 62 THEN
 			ns <= 0;
-			
-		-- Double Ry, store in Rx
+ 
+			-- Double Ry, store in Rx
 		ELSIF state = 701 THEN
 			ns <= 702;
 		ELSIF state = 702 THEN
