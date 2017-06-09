@@ -17,34 +17,24 @@ ENTITY ram_16bit IS
 END;
 
 ARCHITECTURE behavioural OF ram_16bit IS
-	TYPE mem IS ARRAY (15 DOWNTO 0) OF STD_LOGIC_VECTOR(15 DOWNTO 0);
+	TYPE mem IS ARRAY (11 DOWNTO 0) OF STD_LOGIC_VECTOR(15 DOWNTO 0);
 	FUNCTION initialize_ram RETURN mem IS
 		VARIABLE result : mem;
 	BEGIN
 		-- THIS IS WHERE YOU WRITE THE INSTRUCTIONS --
 		result(0) := "0000000000000000"; --LOAD R0
-		result(1) := "1111000011110000"; --Data
+		result(1) := "0011010011110000"; --Data
 		result(2) := "0000000100000000"; --LOAD R1
-		result(3) := "0001101100001100"; --Data
-		result(4) := "0110000100000000"; --MOV R0 to R1
-		result(5) := "0000000100000000"; --LOAD R1
-		result(6) := "0000000000000000"; --Data
-		result(7) := "0100000000000000"; --Load PC into R0
-		result(8) := "0101000100000000"; -- Load PC from R1
+		result(3) := "0100101100001100"; --Data
+		result(4) := "0001000100000000"; --MOV R0 to R1
+		result(5) := "0110000100000000"; --DOUBLE R0, store in R1
+		result(6) := "0011000100000000"; --XOR R0, R1, store in R1
+		result(7) := "0010000000010000"; --ADD R0, R1, store in R0
+		result(8) := "0000000000000000"; --LOAD R0
+		result(9) := "0000000000000000"; --Data
+		result(10) := "0100000100000000"; --Load PC into R1
+		result(11) := "0101000000000000"; --Load PC from R0
  
-		--result(4) := "0100000000000000"; -- Load PC into R0
-		--result(4) := "0010000100000000"; --Add, store in R0
-		--result(5) := "0000000100000000"; --LOAD R1
-		--result(6) := "0000000010001000"; --Data
-		--result(7) := "0010000000010000"; --Add R0 + R1, store in R0
-		--result(8) := "0010000100000000"; --Add R0 + R1, store in R1
-		--result(5) := "0011000000010000"; --XOR R0, R1, store in R0
-		--result(10) := "0011000100000000"; --XOR R0, R1, store in R1
-		--result(11) := "0000000000000000"; --LOAD R0
-		--result(12) := "0000000000000000"; --Data
-		--result(13) := "0000000000000000"; --LOAD R0
-		--result(14) := "0001100000000001"; --Data
-		--result(15) := "0001000100000000"; --MOV R0 to R1 
 		RETURN (result);
 	END initialize_ram;
 

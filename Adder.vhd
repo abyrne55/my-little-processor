@@ -23,7 +23,7 @@ BEGIN
 			flag <= '0';
 			output <= STD_LOGIC_VECTOR(to_unsigned(out_temp, 16));
 		ELSE
-			flag <= '1';
+--			flag <= '1';
 			output <= "0000000000000000";
 		END IF;
 	END PROCESS;
